@@ -19,6 +19,7 @@ class CreatePollsTable extends Migration
             $table->enum('type', ['single-choice', 'multiple-choice', 'input']);
             $table->json('choices');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
