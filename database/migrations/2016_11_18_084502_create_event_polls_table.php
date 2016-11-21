@@ -17,7 +17,6 @@ class CreateEventPollsTable extends Migration
             $table->increments('id');
             $table->integer('event_id')->unsigned();
             $table->integer('poll_id')->unsigned();
-            $table->integer('event_location_id')->unsigned();
             $table->timestamps();
             $table->softDeletes();
 
@@ -28,10 +27,6 @@ class CreateEventPollsTable extends Migration
 
             $table->foreign('poll_id')->references('id')
                 ->on('polls')
-                ->onDelete('cascade');
-
-            $table->foreign('event_location_id')->references('id')
-                ->on('event_locations')
                 ->onDelete('cascade');
         });
     }
