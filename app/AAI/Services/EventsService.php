@@ -1,26 +1,31 @@
 <?php
 namespace App\AAI\Services;
 
+use App\AAI\Modules\EventAnswers\Repositories\EventAnswersRepository;
 use App\AAI\Modules\EventLocations\Repositories\EventLocationsRepository;
 use App\AAI\Modules\EventPolls\Repositories\EventPollsRepository;
 use App\AAI\Modules\Events\Repositories\EventsRepository;
 use App\AAI\Modules\Polls\Repositories\PollsRepository;
+use App\Models\EventAnswers;
 
 class EventsService {
     protected $events;
     protected $eventLocations;
     protected $eventPolls;
     protected $polls;
+    protected $eventAnswer;
 
     public function __construct(EventsRepository $events,
                                 PollsRepository $polls,
                                 EventLocationsRepository $eventLocations,
-                                EventPollsRepository $eventPolls)
+                                EventPollsRepository $eventPolls,
+                                EventAnswersRepository $eventAnswer)
     {
         $this->events = $events;
         $this->polls = $polls;
         $this->eventLocations = $eventLocations;
         $this->eventPolls = $eventPolls;
+        $this->eventAnswer = $eventAnswer;
     }
 
     public function getFullEvents()
@@ -46,7 +51,28 @@ class EventsService {
         return $result;
     }
 
-    public function getPolls($eventId)
+    public function saveAnswer($input)
+    {
+        if (! isset($input['event_id'])) {
+            throw new \Exception("Missing Event Id");
+        }
+
+        if (! isset($input['poll_id'])) {
+            throw new \Exception("Missing Poll Id");
+        }
+
+        if (! isset($input['event_location_id'])) {
+            throw new \Exception("Missing Event Location Id");
+        }
+
+        if (! isset($input['value'])) {
+            throw new \Exception("Missing Answer Value");
+        }
+
+        return EventAnswers::create($input);
+    }
+
+    private function getPolls($eventId)
     {
         $eventPolls = $this->eventPolls->findByKey('event_id', $eventId)->get();
 
@@ -65,7 +91,7 @@ class EventsService {
         return $result;
     }
 
-    public function getEventLocations($eventId)
+    private function getEventLocations($eventId)
     {
         $locations = $this->eventLocations->findByKey('event_id', $eventId)->get();
 
