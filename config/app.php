@@ -167,6 +167,7 @@ return [
          * Package Service Providers...
          */
         Vinkla\Hashids\HashidsServiceProvider::class,
+        App\AAI\AAIServiceProvider::class,
 
         //
 
