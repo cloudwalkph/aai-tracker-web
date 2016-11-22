@@ -58,7 +58,7 @@ class EventsService {
                 'id'        => $poll->id,
                 'name'      => $poll->name,
                 'type'      => $poll->type,
-                'choices'   => $poll->choices
+                'choices'   => json_decode($poll->choices)
             ];
         }
 
