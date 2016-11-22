@@ -21,6 +21,7 @@ Route::group(['prefix' => 'v1'], function() {
 
     Route::group(['prefix' => 'events'], function() {
         Route::get('/', 'API\EventsController@getEvents');
+        Route::post('/{eventId}/answers', 'API\EventAnswersController@saveAnswer');
     });
 });
 

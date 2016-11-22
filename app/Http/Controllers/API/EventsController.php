@@ -14,6 +14,11 @@ class EventsController extends Controller {
 
     public function getEvents()
     {
-        return $this->eventService->getFullEvents();
+        $response = [
+            'data'      => $this->eventService->getFullEvents(),
+            'status'    => 200
+        ];
+
+        return response()->json($response, 200);
     }
 }
