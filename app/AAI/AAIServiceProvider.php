@@ -31,6 +31,8 @@ class AAIServiceProvider extends ServiceProvider
         $this->app->booting(function ($app) {
             $app['aai']->register();
         });
+
+        $this->bindServices();
     }
 
     public function bindServices()

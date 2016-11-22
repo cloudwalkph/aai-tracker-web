@@ -32,7 +32,7 @@ class AAI implements Countable
     {
         $this->files = $files;
         $this->app   = $app;
-        $this->path  = app_path('AAI');
+        $this->path  = app_path('AAI/Modules');
     }
 
     /**
@@ -96,11 +96,12 @@ class AAI implements Countable
      */
     public function registerServiceProvider($module)
     {
-        $file = $this->path . "/Modules/{$module}/Providers/{$module}ServiceProvider.php";
+        $file = $this->path . "/{$module}/Providers/{$module}ServiceProvider.php";
+
         $namespace = 'App\AAI'."\\Modules\\{$module}\\Providers\\{$module}ServiceProvider";
 
         if (! $this->files->exists($file)) {
-            $message = "Module [{$module}] must have a \"Modules/{$module}/Providers/{$module}ServiceProvider.php\" file";
+            $message = "Module [{$module}] must have a \"{$module}/Providers/{$module}ServiceProvider.php\" file";
 
             throw new \Exception($message);
         }

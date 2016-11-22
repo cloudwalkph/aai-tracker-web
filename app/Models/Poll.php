@@ -11,14 +11,4 @@ class Poll extends Model
 
     protected $table = 'polls';
     protected $fillable = ['name', 'type', 'choices'];
-
-    public function uniqueId()
-    {
-        return \Hashids::encode($this->id);
-    }
-
-    public function originalId($value)
-    {
-        return \Hashids::decode($value)[0];
-    }
 }

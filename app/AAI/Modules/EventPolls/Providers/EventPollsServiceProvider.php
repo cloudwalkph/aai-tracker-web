@@ -1,5 +1,5 @@
 <?php
-namespace App\Medix\EventPolls\Providers;
+namespace App\AAI\Modules\EventPolls\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
