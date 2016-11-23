@@ -21,4 +21,8 @@ Route::get('/home', 'HomeController@index');
 
 Route::group(['prefix' => 'insite'], function() {
     Route::get('login', 'Insite\LoginController@index');
+
+    Route::group(['middleware' => 'auth'], function() {
+        Route::get('/', 'Insite\HomeController@index');
+    });
 });
