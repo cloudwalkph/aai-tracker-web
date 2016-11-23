@@ -2,15 +2,18 @@
 namespace App\AAI;
 
 use App\AAI\Modules\EventAnswers\Repositories\EventAnswersRepository;
+use App\AAI\Modules\EventLocationAnswers\Repositories\EventLocationAnswersRepository;
 use App\AAI\Modules\EventLocations\Repositories\EventLocationsRepository;
 use App\AAI\Modules\EventPolls\Repositories\EventPollsRepository;
 use App\AAI\Modules\Events\Repositories\EventsRepository;
 use App\AAI\Modules\Polls\Repositories\PollsRepository;
 use App\AAI\Services\EventAnswersService;
 use App\AAI\Services\EventsService;
+use App\AAI\Services\ImageToS3Service;
 use App\Models\Event;
 use App\Models\EventAnswer;
 use App\Models\EventLocation;
+use App\Models\EventLocationAnswer;
 use App\Models\EventPoll;
 use App\Models\Poll;
 use Illuminate\Support\ServiceProvider;
@@ -47,7 +50,12 @@ class AAIServiceProvider extends ServiceProvider
         });
 
         $this->app->bind('App\AAI\Services\EventAnswersService', function($app) {
-            return new EventAnswersService(new EventAnswersRepository(new EventAnswer));
+            return new EventAnswersService(new EventAnswersRepository(new EventAnswer),
+                new EventLocationAnswersRepository(new EventLocationAnswer));
+        });
+
+        $this->app->bind('App\AAI\Services\ImageToS3Service', function($app) {
+            return new ImageToS3Service();
         });
     }
 }
