@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateEventAnswersTable extends Migration
+class CreateEventLocationAnswersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreateEventAnswersTable extends Migration
      */
     public function up()
     {
-        Schema::create('event_answers', function (Blueprint $table) {
+        Schema::create('event_location_answers', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('poll_id');
-            $table->integer('event_location_answer_id');
-            $table->string('value');
+            $table->string('uuid');
+            $table->integer('event_id');
+            $table->integer('event_location_id');
+            $table->string('image');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -30,6 +31,6 @@ class CreateEventAnswersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('event_answers');
+        Schema::dropIfExists('event_location_answers');
     }
 }
