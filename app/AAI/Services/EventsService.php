@@ -6,26 +6,23 @@ use App\AAI\Modules\EventLocations\Repositories\EventLocationsRepository;
 use App\AAI\Modules\EventPolls\Repositories\EventPollsRepository;
 use App\AAI\Modules\Events\Repositories\EventsRepository;
 use App\AAI\Modules\Polls\Repositories\PollsRepository;
-use App\Models\EventAnswers;
+use App\Models\EventAnswer;
 
 class EventsService {
     protected $events;
     protected $eventLocations;
     protected $eventPolls;
     protected $polls;
-    protected $eventAnswer;
 
     public function __construct(EventsRepository $events,
                                 PollsRepository $polls,
                                 EventLocationsRepository $eventLocations,
-                                EventPollsRepository $eventPolls,
-                                EventAnswersRepository $eventAnswer)
+                                EventPollsRepository $eventPolls)
     {
         $this->events = $events;
         $this->polls = $polls;
         $this->eventLocations = $eventLocations;
         $this->eventPolls = $eventPolls;
-        $this->eventAnswer = $eventAnswer;
     }
 
     public function getFullEvents()
@@ -69,7 +66,7 @@ class EventsService {
             throw new \Exception("Missing Answer Value");
         }
 
-        return EventAnswers::create($input);
+        return EventAnswer::create($input);
     }
 
     private function getPolls($eventId)

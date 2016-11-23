@@ -6,9 +6,10 @@ use App\AAI\Modules\EventLocations\Repositories\EventLocationsRepository;
 use App\AAI\Modules\EventPolls\Repositories\EventPollsRepository;
 use App\AAI\Modules\Events\Repositories\EventsRepository;
 use App\AAI\Modules\Polls\Repositories\PollsRepository;
+use App\AAI\Services\EventAnswersService;
 use App\AAI\Services\EventsService;
 use App\Models\Event;
-use App\Models\EventAnswers;
+use App\Models\EventAnswer;
 use App\Models\EventLocation;
 use App\Models\EventPoll;
 use App\Models\Poll;
@@ -42,8 +43,11 @@ class AAIServiceProvider extends ServiceProvider
         $this->app->bind('App\AAI\Services\EventsService', function($app) {
             return new EventsService(new EventsRepository(new Event),
                 new PollsRepository(new Poll), new EventLocationsRepository(new EventLocation),
-                new EventPollsRepository(new EventPoll),
-                new EventAnswersRepository(new EventAnswers));
+                new EventPollsRepository(new EventPoll));
+        });
+
+        $this->app->bind('App\AAI\Services\EventAnswersService', function($app) {
+            return new EventAnswersService(new EventAnswersRepository(new EventAnswer));
         });
     }
 }
