@@ -34,7 +34,7 @@ class EventAnswersService {
         }
 
         $result = null;
-        \DB::transaction(function() use ($input) {
+        \DB::transaction(function() use ($input, &$result) {
             $eventLocationAnswerData = [
                 'uuid'          => $input['uuid'],
                 'event_id'      => $input['event_id'],
