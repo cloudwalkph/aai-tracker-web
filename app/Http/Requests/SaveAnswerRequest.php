@@ -25,7 +25,7 @@ class SaveAnswerRequest extends FormRequest
     {
         return [
             'uuid'              => 'required',
-            'image'             => 'required',
+            'image'             => 'required|image',
             'answers.*.poll_id' => 'required|exists:polls,id',
             'answers.*.value'   => 'required'
         ];
