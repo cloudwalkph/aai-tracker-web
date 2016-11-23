@@ -10,5 +10,5 @@ class EventLocationAnswer extends Model
     use SoftDeletes;
 
     protected $table = 'event_location_answer';
-    protected $fillable = ['uid', 'event_id', 'user_id', 'event_location_id', 'image'];
+    protected $fillable = ['uuid', 'event_id', 'user_id', 'event_location_id', 'image'];
 }
