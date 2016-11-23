@@ -33,7 +33,16 @@ class EventAnswersService {
             throw new \Exception("Answers Missing");
         }
 
+        // Create the location answer
+        $result = $this->createLocationAnswer($input);
+
+        return $result;
+    }
+
+    private function createLocationAnswer($input)
+    {
         $result = null;
+
         \DB::transaction(function() use ($input, &$result) {
             $eventLocationAnswerData = [
                 'uuid'          => $input['uuid'],
@@ -43,19 +52,28 @@ class EventAnswersService {
                 'image'         => $input['image']
             ];
 
+            // Create event location answer
             $result = EventLocationAnswer::create($eventLocationAnswerData)->toArray();
-
             // Create answers
-            foreach ($input['answers'] as $answer) {
-                $eventAnswer = EventAnswer::create([
-                    'poll_id'                   => $answer['poll_id'],
-                    'event_location_answer_id'  => $result['id'],
-                    'value'                     => $answer['value']
-                ]);
-
-                $result['answers'][] = $eventAnswer;
-            }
+            $result['answers'] = $this->createAnswers($input['answers']);
         });
+
+        return $result;
+    }
+
+    private function createAnswers($answers)
+    {
+        $result = [];
+
+        foreach ($answers as $answer) {
+            $eventAnswer = EventAnswer::create([
+                'poll_id'                   => $answer['poll_id'],
+                'event_location_answer_id'  => $result['id'],
+                'value'                     => $answer['value']
+            ]);
+
+            $result[] = $eventAnswer;
+        }
 
         return $result;
     }
