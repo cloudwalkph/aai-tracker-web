@@ -43,7 +43,7 @@ class EventAnswersService {
                 'image'         => $input['image']
             ];
 
-            $result = EventLocationAnswer::create($eventLocationAnswerData);
+            $result = EventLocationAnswer::create($eventLocationAnswerData)->toArray();
 
             // Create answers
             foreach ($input['answers'] as $answer) {
