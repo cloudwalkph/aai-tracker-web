@@ -9,7 +9,7 @@ class ImageToS3Service {
         $path = $this->getPath();
         $fileName = uniqid() . ".jpg";
 
-        $image->move("{$path}/{$fileName}");
+        $image->move("{$path}", $fileName);
         // TODO: MOVE TO S3
 
         return $fileName;
