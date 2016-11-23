@@ -18,6 +18,7 @@ Route::group(['prefix' => 'v1'], function() {
         return $request->user();
     })->middleware('auth:api');
 
+    Route::post('/upload', 'API\EventAnswersController@uploadImage');
 
     Route::group(['prefix' => 'events'], function() {
         Route::get('/', 'API\EventsController@getEvents');
