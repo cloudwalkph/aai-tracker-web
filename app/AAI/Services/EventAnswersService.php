@@ -46,7 +46,7 @@ class EventAnswersService {
             $result = EventLocationAnswer::create($eventLocationAnswerData);
 
             // Create answers
-            foreach ($result as $answer) {
+            foreach ($input['answers'] as $answer) {
                 $eventAnswer = EventAnswer::create([
                     'poll_id'                   => $answer['poll_id'],
                     'event_location_answer_id'  => $result['id'],
