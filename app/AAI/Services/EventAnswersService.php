@@ -19,6 +19,13 @@ class EventAnswersService {
     }
 
 
+    /**
+     * Save Answer
+     *
+     * @param $input
+     * @return null
+     * @throws \Exception
+     */
     public function saveAnswer($input)
     {
         if (! isset($input['event_id'])) {
@@ -37,6 +44,50 @@ class EventAnswersService {
         $result = $this->createLocationAnswer($input);
 
         return $result;
+    }
+
+    /**
+     * Get Answers By Event Id
+     *
+     * @param $eventId
+     * @return mixed
+     */
+    public function getAnswersByEvent($eventId)
+    {
+        return $this->eventLocationAnswer->findByKey('event_id',$eventId)->get();
+    }
+
+    /**
+     * Get Answers Count By Event Id
+     *
+     * @param $eventId
+     * @return mixed
+     */
+    public function getAnswersCountByEvent($eventId)
+    {
+        return $this->eventLocationAnswer->findByKey('event_id',$eventId)->count();
+    }
+
+    /**
+     * Get Answers By Location Id
+     *
+     * @param $locationId
+     * @return mixed
+     */
+    public function getAnswersByLocationId($locationId)
+    {
+        return $this->eventLocationAnswer->findByKey('event_location_id',$locationId)->get();
+    }
+
+    /**
+     * Get Answers Count By Location Id
+     *
+     * @param $locationId
+     * @return mixed
+     */
+    public function getAnswersCountByLocationId($locationId)
+    {
+        return $this->eventLocationAnswer->findByKey('event_location_id',$locationId)->count();
     }
 
     private function createLocationAnswer($input)
