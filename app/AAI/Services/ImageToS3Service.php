@@ -17,7 +17,7 @@ class ImageToS3Service {
 
     private function getPath()
     {
-        $path = app_path('/images/uploads/');
+        $path = public_path('images/uploads/');
 
         if (! file_exists($path)) {
             mkdir($path, '0755');
