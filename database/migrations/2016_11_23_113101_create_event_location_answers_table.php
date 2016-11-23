@@ -16,6 +16,7 @@ class CreateEventLocationAnswersTable extends Migration
         Schema::create('event_location_answers', function (Blueprint $table) {
             $table->increments('id');
             $table->string('uuid');
+            $table->integer('user_id');
             $table->integer('event_id');
             $table->integer('event_location_id');
             $table->string('image');

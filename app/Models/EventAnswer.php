@@ -10,5 +10,5 @@ class EventAnswers extends Model
     use SoftDeletes;
 
     protected $table = 'event_answers';
-    protected $fillable = ['event_id', 'poll_id', 'event_location_id', 'value'];
+    protected $fillable = ['event_location_answer_id', 'poll_id', 'value'];
 }
