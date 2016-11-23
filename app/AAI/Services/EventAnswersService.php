@@ -106,20 +106,20 @@ class EventAnswersService {
             // Create event location answer
             $result = EventLocationAnswer::create($eventLocationAnswerData)->toArray();
             // Create answers
-            $result['answers'] = $this->createAnswers($input['answers']);
+            $result['answers'] = $this->createAnswers($result['id'], $input['answers']);
         });
 
         return $result;
     }
 
-    private function createAnswers($answers)
+    private function createAnswers($locationAnswerId, $answers)
     {
         $result = [];
 
         foreach ($answers as $answer) {
             $eventAnswer = EventAnswer::create([
                 'poll_id'                   => $answer['poll_id'],
-                'event_location_answer_id'  => $result['id'],
+                'event_location_answer_id'  => $locationAnswerId,
                 'value'                     => $answer['value']
             ]);
 

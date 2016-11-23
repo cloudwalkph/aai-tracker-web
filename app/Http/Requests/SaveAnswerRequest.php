@@ -24,8 +24,10 @@ class SaveAnswerRequest extends FormRequest
     public function rules()
     {
         return [
+            'user_id'           => 'required',
             'uuid'              => 'required',
             'image'             => 'required|image',
+            'answers'           => 'required',
             'answers.*.poll_id' => 'required|exists:polls,id',
             'answers.*.value'   => 'required'
         ];
