@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SaveAnswerRequest extends FormRequest
+class UploadImageRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,12 +24,7 @@ class SaveAnswerRequest extends FormRequest
     public function rules()
     {
         return [
-            'user_id'           => 'required',
-            'uuid'              => 'required',
-            'image'             => 'required',
-            'answers'           => 'required',
-            'answers.*.poll_id' => 'required|exists:polls,id',
-            'answers.*.value'   => 'required'
+            'image'             => 'required|image',
         ];
     }
 
