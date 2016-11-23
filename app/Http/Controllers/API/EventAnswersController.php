@@ -20,12 +20,16 @@ class EventAnswersController extends Controller {
         $this->imageService = $imageService;
     }
 
-    public function saveAnswer(SaveAnswerRequest $request, $eventId)
+    public function saveAnswer(SaveAnswerRequest $request, $eventId, $locationId)
     {
         $input = $request->all();
         $input['event_id'] = $eventId;
+        $input['event_location_id'] = $locationId;
+
+        // Upload the image and get the name
         $input['image'] = $this->imageService->processImage($request->file('image'));
 
+        // Save the answer
         $answer = $this->eventAnswerService->saveAnswer($input);
 
         return response()->json(['status' => 200, 'data' => $answer], 200);
