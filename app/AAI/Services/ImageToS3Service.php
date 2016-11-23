@@ -20,7 +20,7 @@ class ImageToS3Service {
         $path = public_path('images/uploads/');
 
         if (! file_exists($path)) {
-            mkdir($path, '0755');
+            mkdir($path, '0755', true);
         }
 
         return $path;
