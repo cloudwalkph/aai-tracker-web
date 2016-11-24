@@ -18,7 +18,7 @@
         .card-image {
             width: 100%;
             height: 300px;
-            background-color: #6a6a6a;
+            background-color: #c3c3c3;
         }
 
         .card-label {
@@ -56,38 +56,58 @@
                     <!-- Event List -->
                     <div id="card-container" class="col-md-10 col-md-offset-1 col-sm-12 col-xs-12">
                         <div class="row">
-                            <div class="col-md-4 col-sm-6 col-xs-12 card-item">
-                                <div class="card-image">
+                            @foreach ($events as $event)
+                                <div class="col-md-4 col-sm-6 col-xs-12 card-item">
+                                    <a href="/insite/events/{{ $event['id'] }}">
+                                        <div class="card-image">
 
+                                        </div>
+                                    </a>
+
+                                    <div class="card-label">
+                                        <p><strong>{{ $event['name'] }}</strong></p>
+                                        <p>{{ $event['description'] }}</p>
+                                    </div>
                                 </div>
+                            @endforeach
+                            {{--<div class="col-md-4 col-sm-6 col-xs-12 card-item">--}}
+                                {{--<a href="#">--}}
+                                    {{--<div class="card-image">--}}
 
-                                <div class="card-label">
-                                    <p><strong>Event Title</strong></p>
-                                    <p>Event Description</p>
-                                </div>
-                            </div>
+                                    {{--</div>--}}
+                                {{--</a>--}}
 
-                            <div class="col-md-4 col-sm-6 col-xs-12 card-item">
-                                <div class="card-image">
+                                {{--<div class="card-label">--}}
+                                    {{--<p><strong>Event Title</strong></p>--}}
+                                    {{--<p>Event Description</p>--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
 
-                                </div>
+                            {{--<div class="col-md-4 col-sm-6 col-xs-12 card-item">--}}
+                                {{--<a href="#">--}}
+                                    {{--<div class="card-image">--}}
 
-                                <div class="card-label">
-                                    <p><strong>Event Title</strong></p>
-                                    <p>Event Description</p>
-                                </div>
-                            </div>
+                                    {{--</div>--}}
+                                {{--</a>--}}
 
-                            <div class="col-md-4 col-sm-6 col-xs-12 card-item">
-                                <div class="card-image">
+                                {{--<div class="card-label">--}}
+                                    {{--<p><strong>Event Title</strong></p>--}}
+                                    {{--<p>Event Description</p>--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
 
-                                </div>
+                            {{--<div class="col-md-4 col-sm-6 col-xs-12 card-item">--}}
+                                {{--<a href="#">--}}
+                                    {{--<div class="card-image">--}}
 
-                                <div class="card-label">
-                                    <p><strong>Event Title</strong></p>
-                                    <p>Event Description</p>
-                                </div>
-                            </div>
+                                    {{--</div>--}}
+                                {{--</a>--}}
+
+                                {{--<div class="card-label">--}}
+                                    {{--<p><strong>Event Title</strong></p>--}}
+                                    {{--<p>Event Description</p>--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
                         </div>
                     </div>
                 </div>

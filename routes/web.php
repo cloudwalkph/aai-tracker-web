@@ -24,5 +24,9 @@ Route::group(['prefix' => 'insite'], function() {
 
     Route::group(['middleware' => 'auth'], function() {
         Route::get('/', 'Insite\HomeController@index');
+
+        Route::group(['prefix' => 'events'], function() {
+            Route::get('{eventId}', 'Insite\EventsController@show');
+        });
     });
 });
