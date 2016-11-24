@@ -39,7 +39,7 @@
 @endsection
 
 @section('page-js')
-    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="/js/d3.js"></script>
     <script src="/lib/nvd3/nvd3.min.js"></script>
 
     <script type="application/javascript">
@@ -86,7 +86,7 @@
                 <div class="row">
                     <div class="col-md-4 col-sm-12 col-xs-12">
                         <div class="video-feed">
-
+                            <img src="http://192.168.8.103:81/videostream.cgi?user=admin&pwd=888888" alt="">
                         </div>
                     </div>
 

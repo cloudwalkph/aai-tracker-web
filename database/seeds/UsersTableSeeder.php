@@ -20,7 +20,7 @@ class UsersTableSeeder extends Seeder
             'password'          => bcrypt('password'),
         ]);
 
-        \App\EventUser::create([
+        \App\Models\EventUser::create([
             'user_id'   => $user->id,
             'event_id'  => 1
         ]);

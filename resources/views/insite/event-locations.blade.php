@@ -53,7 +53,7 @@
 @endsection
 
 @section('page-js')
-    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="/js/d3.js"></script>
     <script src="/lib/nvd3/nvd3.min.js"></script>
 
 

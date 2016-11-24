@@ -19,7 +19,7 @@ class CreateEventLocationAnswersTable extends Migration
             $table->integer('user_id');
             $table->integer('event_id');
             $table->integer('event_location_id');
-            $table->string('image');
+            $table->string('image')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
