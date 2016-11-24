@@ -22,7 +22,7 @@ class UsersTableSeeder extends Seeder
 
         \App\EventUser::create([
             'user_id'   => $user->id,
-            'event_ud'  => 1
+            'event_id'  => 1
         ]);
     }
 }
