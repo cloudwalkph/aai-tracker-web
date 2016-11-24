@@ -103,11 +103,13 @@ class EventAnswersService {
         $eventLocationAnswer = $this->eventLocationAnswer->findByKey('event_location_id', $locationId)->first();
         $eventPolls = EventPoll::where('event_id', $eventId)->get();
 
+        if (! $eventLocationAnswer) {
+            return [];
+        }
+
         $result = [];
         foreach ($eventPolls as $poll) {
             $pollInfo = Poll::where('id', $poll->poll_id)->first();
-
-
 
             // set key for poll
             $eventAnswers = EventAnswer::where('event_location_answer_id', $eventLocationAnswer->id)
