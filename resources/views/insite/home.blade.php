@@ -16,7 +16,7 @@
         }
 
         .card-image {
-            width: 350px;
+            width: 100%;
             height: 300px;
             background-color: #6a6a6a;
         }
@@ -54,9 +54,9 @@
 
                 <div class="row">
                     <!-- Event List -->
-                    <div id="card-container" class="col-md-10 col-md-offset-1">
+                    <div id="card-container" class="col-md-10 col-md-offset-1 col-sm-12 col-xs-12">
                         <div class="row">
-                            <div class="col-md-4 card-item">
+                            <div class="col-md-4 col-sm-6 col-xs-12 card-item">
                                 <div class="card-image">
 
                                 </div>
@@ -67,7 +67,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-4 card-item">
+                            <div class="col-md-4 col-sm-6 col-xs-12 card-item">
                                 <div class="card-image">
 
                                 </div>
@@ -78,7 +78,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-4 card-item">
+                            <div class="col-md-4 col-sm-6 col-xs-12 card-item">
                                 <div class="card-image">
 
                                 </div>
