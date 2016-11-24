@@ -7,30 +7,10 @@
             margin-top: 80px;
         }
 
-        #card-container {
-            margin-top: 200px;
-            display: inline-block;
-            border-left: 1px solid #c3c3c3;
-        }
-
-        .card-image {
-            width: 100%;
-            height: 300px;
-            background-color: #c3c3c3;
-        }
-
-        .card-label {
-            margin-top: 20px;
-        }
-
         .card-label p {
             line-height: 0.7em;
             text-align: center;
             font-size: 20px;
-        }
-
-        .card-item {
-            cursor: pointer;
         }
 
         #pieChartContainer1 {
@@ -41,6 +21,12 @@
         #pieChartContainer2 {
             width: 100%;
             height: 400px;
+        }
+
+        .video-feed {
+            width: 100%;
+            height: 500px;
+            background-color: #777777;
         }
 
         hr {
@@ -57,7 +43,7 @@
     <script src="/lib/nvd3/nvd3.min.js"></script>
 
     <script type="application/javascript">
-        d3.json("/api/v1/events/{{ $event->id }}/answers", function (data) {
+        d3.json("/api/v1/events/{{ $event->id }}/locations/{{ $location->id }}/answers", function (data) {
             drawChart('#pieChartContainer1 svg', data.data['Gender']);
             drawChart('#pieChartContainer2 svg', data.data['Age Group']);
         });
@@ -99,36 +85,22 @@
 
                 <div class="row">
                     <div class="col-md-4 col-sm-12 col-xs-12">
-                        <div class="col-md-12">
+                        <div class="video-feed">
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-8 col-sm-12 col-xs-12">
+                        <div class="col-md-6">
                             <div id="pieChartContainer1">
                                 <svg></svg>
                             </div>
                         </div>
 
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <div id="pieChartContainer2">
                                 <svg></svg>
                             </div>
-                        </div>
-                    </div>
-
-                    <!-- Event List -->
-                    <div id="card-container" class="col-md-7 col-sm-12 col-xs-12">
-                        <div class="row">
-                            @foreach ($locations as $location)
-                                <div class="col-md-4 col-sm-6 col-xs-12 card-item">
-                                    <a href="/insite/events/{{ $event['id'] }}/locations/{{ $location['id'] }}">
-                                        <div class="card-image">
-
-                                        </div>
-                                    </a>
-
-                                    <div class="card-label">
-                                        <p><strong>{{ $location['name'] }}</strong></p>
-                                        {{--<p>{{ $event['description'] }}</p>--}}
-                                    </div>
-                                </div>
-                            @endforeach
                         </div>
                     </div>
                 </div>

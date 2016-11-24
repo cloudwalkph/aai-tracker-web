@@ -27,6 +27,7 @@ Route::group(['prefix' => 'insite'], function() {
 
         Route::group(['prefix' => 'events'], function() {
             Route::get('{eventId}', 'Insite\EventsController@show');
+            Route::get('{eventId}/locations/{locationId}', 'Insite\EventsController@showByLocation');
         });
     });
 });

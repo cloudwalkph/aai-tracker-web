@@ -48,4 +48,11 @@ class EventAnswersController extends Controller {
 
         return response()->json(['data' => $answers, 'status' => 200], 200);
     }
+
+    public function getAnswerByLocation($eventId, $locationId)
+    {
+        $answers = $this->eventAnswerService->getAnswersByLocationId($eventId, $locationId);
+
+        return response()->json(['data' => $answers, 'status' => 200], 200);
+    }
 }

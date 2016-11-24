@@ -21,4 +21,18 @@ class EventsController extends Controller {
             ->with('locations', $locations)
             ->with('event', $event);
     }
+
+    public function showByLocation(Request $request, $eventId, $locationId)
+    {
+        // setup page
+        config(['app.name' => 'Events | Insite Dashboard']);
+
+        // get data
+        $event = Event::where('id', $eventId)->first();
+        $location = EventLocation::where('id', $locationId)->first();
+
+        return view('insite.event-location')
+            ->with('location', $location)
+            ->with('event', $event);
+    }
 }
