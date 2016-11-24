@@ -5,6 +5,8 @@ use App\AAI\Modules\EventAnswers\Repositories\EventAnswersRepository;
 use App\AAI\Modules\EventLocationAnswers\Repositories\EventLocationAnswersRepository;
 use App\Models\EventAnswer;
 use App\Models\EventLocationAnswer;
+use App\Models\EventPoll;
+use App\Models\Poll;
 
 class EventAnswersService {
 
@@ -54,7 +56,29 @@ class EventAnswersService {
      */
     public function getAnswersByEvent($eventId)
     {
-        return $this->eventLocationAnswer->findByKey('event_id',$eventId)->get();
+        $eventLocationAnswers = $this->eventLocationAnswer->findByKey('event_id',$eventId)->get();
+        $eventPolls = EventPoll::where('event_id', $eventId)->get();
+
+        $result = [];
+        foreach ($eventPolls as $poll) {
+            $pollInfo = Poll::where('id', $poll->poll_id)->first();
+
+            // set key for poll
+            foreach ($eventLocationAnswers as $locationAnswer) {
+                $eventAnswers = EventAnswer::where('event_location_answer_id', $locationAnswer->id)
+                    ->where('poll_id', $pollInfo->id)
+                    ->get();
+
+                foreach ($eventAnswers as $answer) {
+                    $result[$pollInfo->name][] = [
+                        'answer' => 1,
+                        'label'  => ucwords($answer->value)
+                    ];
+                }
+            }
+        }
+
+        return $result;
     }
 
     /**

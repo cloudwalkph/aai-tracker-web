@@ -1,6 +1,7 @@
 @extends('layouts.insite')
 
 @section('page-css')
+    <link rel="stylesheet" href="/lib/nvd3/nvd3.css">
     <style>
         .dasboard {
             margin-top: 80px;
@@ -30,6 +31,14 @@
             cursor: pointer;
         }
 
+        #pieChartContainer1 {
+            height: 400px;
+        }
+
+        #pieChartContainer2 {
+            height: 400px;
+        }
+
         hr {
             border: none;
             height: 1px;
@@ -41,121 +50,39 @@
 
 @section('page-js')
     <script src="http://d3js.org/d3.v3.min.js"></script>
-    <script src="http://dimplejs.org/dist/dimple.v2.1.6.min.js"></script>
+    <script src="/lib/nvd3/nvd3.min.js"></script>
 
     <script type="application/javascript">
-        var svg = dimple.newSvg("#pieChartContainer1", 590, 400);
-
-        d3.tsv("/example_data.tsv", function (data) {
-            var myChart = new dimple.chart(svg, data);
-            myChart.setBounds(150, 0, 300, 250);
-            myChart.addMeasureAxis("p", "Unit Sales");
-            var ring = myChart.addSeries("Owner", dimple.plot.pie);
-
-            ring.afterDraw = function(shape, data) {
-                var g = svg.select("g");
-                //find the center of the pie
-                var grect =  g.node().getBBox();
-                var gmidx =  grect.x + (grect.width - 7)/2;
-                var gmidy =  grect.y + (grect.height - 7)/2;
-                var radius = (grect.height - 7) / 2;
-                //find the center of the pie-part
-                var srect =  d3.select(shape).node().getBBox();
-                var smidx =  srect.x + srect.width/2;
-                var smidy =  srect.y + srect.height/2;
-                //get the direction:
-                //the parts are arranged around the center as origin (0,0)
-                //so the direction is simply the mid point of the pie-part
-                var dirx =   smidx;
-                var diry =   smidy;
-                var norm =   Math.sqrt(dirx * dirx + diry * diry);
-                //normalize the direction
-                dirx /= norm;
-                diry /= norm;
-                //multiply direction by radius to find placement for label
-                //get two points: where to put label, and where to draw a line
-                var x = Math.round(gmidx + (radius + 25) * dirx);
-                var y = Math.round(gmidy + (radius + 15)  * diry);
-                var xOnPie = Math.round(gmidx + (radius+4) * dirx);
-                var yOnPie = Math.round(gmidy + (radius+4) * diry);
-                //append label
-                var node = svg.append("text")
-                        .attr("x", x + ((dirx > 0) ? 5 : -5))
-                        .attr("y", y + 3)
-                        .style("font-size", "12px")
-                        .style("font-family", "sans-serif")
-                        .style("text-anchor", (dirx > 0) ? "start" : "end")
-                        .style("fill", "black")
-                        .text(data.aggField[0]);
-                //append line
-                svg.append("line")
-                        .attr("x1", x)
-                        .attr("y1", y)
-                        .attr("x2", xOnPie)
-                        .attr("y2", yOnPie)
-                        .style("stroke", "#e0e0e0");
-            };
-
-            myChart.draw();
+        d3.json("/api/v1/events/{{ $event->id }}/answers", function (data) {
+            drawChart('#pieChartContainer1 svg', data.data['Gender']);
+            drawChart('#pieChartContainer2 svg', data.data['Age Group']);
         });
-    </script>
 
-    <script type="application/javascript">
-        var svg2 = dimple.newSvg("#pieChartContainer2", 590, 400);
+        function drawChart(container, data) {
+            nv.addGraph(function() {
+                var chart = nv.models.pieChart()
+                        .x(function(d) { return d.key })
+                        .y(function(d) { return d.values })
+                        .showLabels(true)
+                        .labelThreshold(.05)
+                        .labelType("key")
+                        .labelsOutside(true);
 
-        d3.tsv("/example_data.tsv", function (data) {
-            var myChart2 = new dimple.chart(svg2, data);
-            myChart2.setBounds(150, 0, 300, 250);
-            myChart2.addMeasureAxis("p", "Unit Sales");
-            myChart2.addSeries("Owner", dimple.plot.pie);
-            var ring2 = myChart2.addSeries("Owner", dimple.plot.pie);
+                var chartData = d3.nest()
+                        .key(function(d) { return d.label })
+                        .rollup(function(d) {
+                            return d3.sum(d, function(g) { return g.answer });
+                        }).entries(data);
 
-            ring2.afterDraw = function(shape, data) {
-                var g = svg2.select("g");
-                //find the center of the pie
-                var grect =  g.node().getBBox();
-                var gmidx =  grect.x + (grect.width - 7)/2;
-                var gmidy =  grect.y + (grect.height - 7)/2;
-                var radius = (grect.height - 7) / 2;
-                //find the center of the pie-part
-                var srect =  d3.select(shape).node().getBBox();
-                var smidx =  srect.x + srect.width/2;
-                var smidy =  srect.y + srect.height/2;
-                //get the direction:
-                //the parts are arranged around the center as origin (0,0)
-                //so the direction is simply the mid point of the pie-part
-                var dirx =   smidx;
-                var diry =   smidy;
-                var norm =   Math.sqrt(dirx * dirx + diry * diry);
-                //normalize the direction
-                dirx /= norm;
-                diry /= norm;
-                //multiply direction by radius to find placement for label
-                //get two points: where to put label, and where to draw a line
-                var x = Math.round(gmidx + (radius + 25) * dirx);
-                var y = Math.round(gmidy + (radius + 15)  * diry);
-                var xOnPie = Math.round(gmidx + (radius+4) * dirx);
-                var yOnPie = Math.round(gmidy + (radius+4) * diry);
-                //append label
-                var node = svg2.append("text")
-                        .attr("x", x + ((dirx > 0) ? 5 : -5))
-                        .attr("y", y + 3)
-                        .style("font-size", "12px")
-                        .style("font-family", "sans-serif")
-                        .style("text-anchor", (dirx > 0) ? "start" : "end")
-                        .style("fill", "black")
-                        .text(data.aggField[0]);
-                //append line
-                svg2.append("line")
-                        .attr("x1", x)
-                        .attr("y1", y)
-                        .attr("x2", xOnPie)
-                        .attr("y2", yOnPie)
-                        .style("stroke", "#e0e0e0");
-            };
+                d3.select(container)
+                        .datum(chartData)
+                        .transition().duration(350)
+                        .call(chart);
 
-            myChart2.draw();
-        });
+                return chart;
+            });
+        }
+
     </script>
 @endsection
 
@@ -166,8 +93,12 @@
 
                 <div class="row">
                     <div class="col-md-4 col-sm-12 col-xs-12">
-                        <div id="pieChartContainer1"></div>
-                        <div id="pieChartContainer2"></div>
+                        <div id="pieChartContainer1">
+                            <svg></svg>
+                        </div>
+                        <div id="pieChartContainer2">
+                            <svg></svg>
+                        </div>
                     </div>
 
                     <!-- Event List -->
