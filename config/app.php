@@ -168,6 +168,7 @@ return [
          */
         Vinkla\Hashids\HashidsServiceProvider::class,
         App\AAI\AAIServiceProvider::class,
+        Laravel\Passport\PassportServiceProvider::class,
 
         //
 
