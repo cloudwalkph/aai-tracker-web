@@ -19,14 +19,6 @@ function drawChart(container, data) {
             .transition().duration(350)
             .call(chart);
 
-        // Add Title
-        d3.select(container)
-            .append("text")
-            .attr("x", 200)
-            .attr("y", 100)
-            .attr("text-anchor", "middle")
-            .text("Sample Charts");
-
         nv.utils.windowResize(chart.update);
 
         return chart;
