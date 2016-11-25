@@ -7,6 +7,7 @@ use App\AAI\Services\ImageToS3Service;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SaveAnswerRequest;
 use App\Http\Requests\UploadImageRequest;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class EventAnswersController extends Controller {
     protected $eventService;
@@ -44,15 +45,56 @@ class EventAnswersController extends Controller {
 
     public function getAnswers($eventId)
     {
-        $answers = $this->eventAnswerService->getAnswersByEvent($eventId);
+        $response = new StreamedResponse(function() use ($eventId) {
+            $answersCount = 0;
+            $newAnswersCount = $this->eventAnswerService->getAnswersCountByEvent($eventId);
 
-        return response()->json(['data' => $answers, 'status' => 200], 200);
+            if ($newAnswersCount != $answersCount) {
+                $answers = $this->eventAnswerService->getAnswersByEvent($eventId);
+                $json = [
+                    'data'      => $answers,
+                    'status'    => 200
+                ];
+
+                echo 'data: ' . json_encode($json) . "\n\n";
+                ob_flush();
+                flush();
+            }
+
+            sleep(3);
+            $answersCount = $newAnswersCount;
+        }, 200);
+
+        $response->headers->set('Content-Type', 'text/event-stream');
+
+        return $response;
     }
 
     public function getAnswerByLocation($eventId, $locationId)
     {
-        $answers = $this->eventAnswerService->getAnswersByLocationId($eventId, $locationId);
+        $response = new StreamedResponse(function() use ($eventId, $locationId) {
+            $answersCount = 0;
+            $newAnswersCount = $this->eventAnswerService->getAnswersCountByLocationId($locationId);
 
-        return response()->json(['data' => $answers, 'status' => 200], 200);
+            if ($newAnswersCount != $answersCount) {
+                $answers = $this->eventAnswerService->getAnswersByLocationId($eventId, $locationId);
+
+                $json = [
+                    'data'      => $answers,
+                    'status'    => 200
+                ];
+
+                echo 'data: ' . json_encode($json) . "\n\n";
+                ob_flush();
+                flush();
+            }
+
+            sleep(3);
+            $answersCount = $newAnswersCount;
+        });
+
+        $response->headers->set('Content-Type', 'text/event-stream');
+
+        return $response;
     }
 }
