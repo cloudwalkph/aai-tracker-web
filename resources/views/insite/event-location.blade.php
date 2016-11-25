@@ -41,40 +41,16 @@
 @section('page-js')
     <script src="/js/d3.js"></script>
     <script src="/lib/nvd3/nvd3.min.js"></script>
+    <script src="/js/drawchart.js"></script>
 
     <script type="application/javascript">
-        d3.json("/api/v1/events/{{ $event->id }}/locations/{{ $location->id }}/answers", function (data) {
-            drawChart('#pieChartContainer1 svg', data.data['Gender']);
-            drawChart('#pieChartContainer2 svg', data.data['Age Group']);
-        });
+        var source = new EventSource('/api/v1/events/{{ $event->id }}/locations/{{ $location->id }}/answers');
+        source.addEventListener("message", function(res) {
+            var jsonData = JSON.parse(res.data);
 
-        function drawChart(container, data) {
-            nv.addGraph(function() {
-                var chart = nv.models.pieChart()
-                        .x(function(d) { return d.key })
-                        .y(function(d) { return d.values })
-                        .showLabels(true)
-                        .labelThreshold(.05)
-                        .labelType("key")
-                        .labelsOutside(true);
-
-                var chartData = d3.nest()
-                        .key(function(d) { return d.label })
-                        .rollup(function(d) {
-                            return d3.sum(d, function(g) { return g.answer });
-                        }).entries(data);
-
-                d3.select(container)
-                        .datum(chartData)
-                        .transition().duration(350)
-                        .call(chart);
-
-                nv.utils.windowResize(chart.update);
-
-                return chart;
-            });
-        }
-
+            drawChart('#pieChartContainer1 svg', jsonData.data['Gender']);
+            drawChart('#pieChartContainer2 svg', jsonData.data['Age Group']);
+        }, false)
     </script>
 @endsection
 
@@ -86,7 +62,7 @@
                 <div class="row">
                     <div class="col-md-4 col-sm-12 col-xs-12">
                         <div class="video-feed">
-                            <img src="http://192.168.8.103:81/videostream.cgi?user=admin&pwd=888888" alt="">
+                            {{--<img src="http://192.168.8.103:81/videostream.cgi?user=admin&pwd=888888" alt="">--}}
                         </div>
                     </div>
 
