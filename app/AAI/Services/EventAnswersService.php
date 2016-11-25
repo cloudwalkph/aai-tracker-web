@@ -100,7 +100,7 @@ class EventAnswersService {
      */
     public function getAnswersByLocationId($eventId, $locationId)
     {
-        $eventLocationAnswer = $this->eventLocationAnswer->findByKey('event_location_id', $locationId)->first();
+        $eventLocationAnswer = $this->eventLocationAnswer->findByKey('event_location_id', $locationId)->get();
         $eventPolls = EventPoll::where('event_id', $eventId)->get();
 
         if (! $eventLocationAnswer) {
@@ -111,16 +111,19 @@ class EventAnswersService {
         foreach ($eventPolls as $poll) {
             $pollInfo = Poll::where('id', $poll->poll_id)->first();
 
-            // set key for poll
-            $eventAnswers = EventAnswer::where('event_location_answer_id', $eventLocationAnswer->id)
-                ->where('poll_id', $pollInfo->id)
-                ->get();
+            foreach ($eventLocationAnswer as $eventLocation) {
+                // set key for poll
+                $eventAnswers = EventAnswer::where('event_location_answer_id', $eventLocation->id)
+                    ->where('poll_id', $pollInfo->id)
+                    ->get();
 
-            foreach ($eventAnswers as $answer) {
-                $result[$pollInfo->name][] = [
-                    'answer' => 1,
-                    'label'  => ucwords($answer->value)
-                ];
+
+                foreach ($eventAnswers as $answer) {
+                    $result[$pollInfo->name][] = [
+                        'answer' => 1,
+                        'label'  => ucwords($answer->value)
+                    ];
+                }
             }
         }
 
