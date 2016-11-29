@@ -150,7 +150,7 @@
                                             <ul class="hit-statistics">
                                                 <li>
                                                     Hits <br>
-                                                    <span id="hits-{{ $event['id'] }}">500</span>/<span>1000</span>
+                                                    <span id="hits-{{ $event['id'] }}">500</span>/<span>{{ $event['expected-hits'] }}</span>
                                                 </li>
                                             </ul>
                                         </div>

@@ -3,6 +3,7 @@ namespace App\Http\Controllers\Insite;
 
 use App\Http\Controllers\Controller;
 use App\Models\Event;
+use App\Models\EventLocation;
 use App\Models\EventUser;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -23,6 +24,10 @@ class HomeController extends Controller {
         $events = [];
         foreach ($eventsForUser as $userEvent) {
             $event = Event::where('id', $userEvent->event_id)->first();
+            $eventExpectedHits = EventLocation::where('event_id', $event->id)
+                ->sum('expected_hits');
+
+            $event['expected-hits'] = $eventExpectedHits;
             $event['status'] = $this->getStatus($event);
             $event['status-slug'] = Str::slug($event['status']);
 
