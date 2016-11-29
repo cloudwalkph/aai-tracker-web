@@ -121,7 +121,7 @@
 
                 <div class="logo col-xs-12 col-md-12">
                     <hr>
-                    <img src="/images/insite-logo.png" alt="Activations Insite logo"> <br>
+                    <img src="/logo.png" alt="Activations Insite logo"> <br>
                     <a href="{{ url('/logout') }}" id="logout"
                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
