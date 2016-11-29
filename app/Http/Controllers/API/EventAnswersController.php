@@ -119,4 +119,26 @@ class EventAnswersController extends Controller {
 
         return $response;
     }
+
+    public function getEventsHitCountByLocation($eventId)
+    {
+        $response = new StreamedResponse(function() use ($eventId) {
+            $eventsHitCount = $this->eventAnswerService->getAnswersCountForLocationOfEvent($eventId);
+
+            $json = [
+                'data'      => $eventsHitCount,
+                'status'    => 200
+            ];
+
+            echo 'data: ' . json_encode($json) . "\n\n";
+            ob_flush();
+            flush();
+
+            sleep(3);
+        }, 200);
+
+        $response->headers->set('Content-Type', 'text/event-stream');
+
+        return $response;
+    }
 }

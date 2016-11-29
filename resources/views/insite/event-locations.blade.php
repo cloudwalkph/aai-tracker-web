@@ -2,21 +2,46 @@
 
 @section('page-css')
     <link rel="stylesheet" href="/lib/nvd3/nvd3.css">
+    <link rel="stylesheet" type="text/css" href="/lib/slick/slick.css"/>
+    <link rel="stylesheet" type="text/css" href="/lib/slick/slick-theme.css"/>
+
     <style>
         .dasboard {
-            margin-top: 80px;
+            margin-top: 10px;
         }
 
-        #card-container {
-            margin-top: 200px;
+        .card-container {
             display: inline-block;
-            border-left: 1px solid #dddddd;
         }
 
         .card-image {
             width: 100%;
-            height: 300px;
+            height: 250px;
             background-color: #dddddd;
+            display: table;
+            text-align: center;
+        }
+
+        .card-image > .hit-statistics {
+            display: table-cell;
+            vertical-align: middle;
+        }
+
+        a:hover {
+            text-decoration: none;
+        }
+
+        .hit-statistics {
+            width: 100%;
+            height: 100%;
+            font-size: 25px;
+            font-weight: 500;
+            color: #646363;
+            padding: 0;
+        }
+
+        .hit-statistics li {
+            list-style: none;
         }
 
         .card-label {
@@ -30,17 +55,46 @@
         }
 
         .card-item {
+            margin-top: 130px;
             cursor: pointer;
         }
 
         #pieChartContainer1 {
             width: 100%;
-            height: 400px;
+            height: 300px;
         }
 
         #pieChartContainer2 {
             width: 100%;
-            height: 400px;
+            height: 300px;
+        }
+
+        .event-title {
+            margin-left: 20px;
+            font-size: 25px;
+        }
+
+        .charts {
+            border-right: 1px #000;
+        }
+
+        .logo {
+            width: 100%;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .logo img {
+            width: 100%;
+            max-width: 200px;
+        }
+
+        #logout {
+            display: inline;
+            font-size: 25px;
+            text-decoration: underline;
+            cursor: pointer;
+            color: #646363;
         }
 
         hr {
@@ -53,20 +107,43 @@
 @endsection
 
 @section('page-js')
+    <script type="text/javascript" src="/lib/slick/slick.min.js"></script>
     <script src="/js/d3.js"></script>
     <script src="/lib/nvd3/nvd3.min.js"></script>
     <script src="/js/drawchart.js"></script>
 
-
     @if ($event)
         <script type="application/javascript">
             var source = new EventSource('/api/v1/events/{{ $event->id }}/answers');
+            var hitSource = new EventSource('/api/v1/events/hits/{{ $event->id }}');
+            var hitsWorker = new Worker('/js/hits-updater.js');
+
             source.addEventListener("message", function(res) {
                 var jsonData = JSON.parse(res.data);
 
                 drawChart('#pieChartContainer1 svg', jsonData.data['Gender']);
                 drawChart('#pieChartContainer2 svg', jsonData.data['Age Group']);
-            }, false)
+            }, false);
+
+            // Hits
+            hitSource.addEventListener("message", function(res) {
+                var jsonData = JSON.parse(res.data);
+
+                hitsWorker.postMessage(jsonData);
+            }, false);
+
+            hitsWorker.onmessage = function(e) {
+                var element = document.getElementById(e.data.id);
+                element.innerHTML = e.data.event.total_hits;
+            };
+
+            $(function() {
+                $('.events').slick({
+                    infinite: true,
+                    slidesToShow: 3,
+                    slidesToScroll: 3
+                });
+            });
         </script>
     @endif
 @endsection
@@ -75,9 +152,14 @@
     <div class="container-fluid dasboard">
         <div class="row">
             <div class="col-md-12">
+                <div class="row" style="margin-bottom: 40px">
+                    <div class="col-md-4">
+                        <h1 class="event-title">{{ $event['name'] . ' : ' . $event['description'] }}</h1>
+                    </div>
+                </div>
 
                 <div class="row">
-                    <div class="col-md-4 col-sm-12 col-xs-12">
+                    <div class="col-md-4 col-sm-12 col-xs-12 charts">
                         <div class="col-md-12">
                             <div id="pieChartContainer1">
                                 <svg></svg>
@@ -92,13 +174,18 @@
                     </div>
 
                     <!-- Event List -->
-                    <div id="card-container" class="col-md-7 col-sm-12 col-xs-12">
-                        <div class="row">
+                    <div class="card-container col-md-7 col-sm-12 col-xs-12">
+                        <div class="row events">
                             @foreach ($locations as $location)
                                 <div class="col-md-4 col-sm-6 col-xs-12 card-item">
                                     <a href="/insite/events/{{ $event['id'] }}/locations/{{ $location['id'] }}">
                                         <div class="card-image">
-
+                                            <ul class="hit-statistics">
+                                                <li>
+                                                    Hits <br>
+                                                    <span id="hits-{{ $location['id'] }}">0</span>/<span>{{ $location['expected_hits'] }}</span>
+                                                </li>
+                                            </ul>
                                         </div>
                                     </a>
 
@@ -110,6 +197,19 @@
                             @endforeach
                         </div>
                     </div>
+                </div>
+
+                <div class="logo">
+                    <img src="/images/insite-logo.png" alt="Activations Insite logo"> <br>
+                    <a href="{{ url('/logout') }}" id="logout"
+                       onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                        Logout
+                    </a>
+
+                    <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+                        {{ csrf_field() }}
+                    </form>
                 </div>
             </div>
         </div>

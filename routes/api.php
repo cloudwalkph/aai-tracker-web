@@ -23,6 +23,7 @@ Route::group(['prefix' => 'v1'], function() {
     Route::group(['prefix' => 'events'], function() {
         Route::get('/', 'API\EventsController@getEvents');
         Route::get('/hits', 'API\EventAnswersController@getEventsHitCount');
+        Route::get('/hits/{eventId}', 'API\EventAnswersController@getEventsHitCountByLocation');
         Route::get('/{eventId}/answers', 'API\EventAnswersController@getAnswers');
         Route::get('/{eventId}/locations/{locationId}/answers', 'API\EventAnswersController@getAnswerByLocation');
         Route::post('/{eventId}/event-locations/{locationId}/answer', 'API\EventAnswersController@saveAnswer');

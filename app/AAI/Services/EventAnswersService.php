@@ -5,6 +5,7 @@ use App\AAI\Modules\EventAnswers\Repositories\EventAnswersRepository;
 use App\AAI\Modules\EventLocationAnswers\Repositories\EventLocationAnswersRepository;
 use App\Models\Event;
 use App\Models\EventAnswer;
+use App\Models\EventLocation;
 use App\Models\EventLocationAnswer;
 use App\Models\EventPoll;
 use App\Models\Poll;
@@ -99,6 +100,25 @@ class EventAnswersService {
             $event['total_hits'] = $count;
 
             $result[] = $event;
+        }
+
+        return $result;
+    }
+
+    public function getAnswersCountForLocationOfEvent($eventId)
+    {
+        $result = [];
+        $today = Carbon::now('Asia/Manila');
+        $date = $today->toDateString();
+
+        $eventLocations = EventLocation::where('event_id', $eventId)->get();
+
+        foreach ($eventLocations as $location) {
+            $count = $this->getAnswersCountByLocationId($location->id);
+
+            $location['total_hits'] = $count;
+
+            $result[] = $location;
         }
 
         return $result;

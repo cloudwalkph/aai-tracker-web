@@ -87,6 +87,18 @@ class EventsDataSeeder extends Seeder
                 'name'  => 'SM Fairview',
                 'expected_hits' => 500
             ]);
+
+            EventLocation::create([
+                'event_id'  => $eventData->id,
+                'name'  => 'SM Mall of Asia',
+                'expected_hits' => 500
+            ]);
+
+            EventLocation::create([
+                'event_id'  => $eventData->id,
+                'name'  => 'SM Parañaque',
+                'expected_hits' => 500
+            ]);
         }
 
         EventPoll::create([
