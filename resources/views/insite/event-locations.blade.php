@@ -200,7 +200,7 @@
                 </div>
 
                 <div class="logo">
-                    <img src="/images/logo.png" alt="Activations Insite logo"> <br>
+                    <img src="/logo.png" alt="Activations Insite logo"> <br>
                     <a href="{{ url('/logout') }}" id="logout"
                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
