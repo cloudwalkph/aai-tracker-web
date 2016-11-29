@@ -26,7 +26,9 @@ function drawChart(container, data) {
         nv.utils.windowResize(chart.update);
 
         chart.pie.dispatch.on("elementClick", function(e) {
-            alert("You've clicked " + e.data.key);
+            window.keySelected = e.data.key;
+
+            $('.answersModal').modal('show');
         });
 
         return chart;
