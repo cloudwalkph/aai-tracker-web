@@ -18,7 +18,7 @@
         .card-image {
             width: 100%;
             height: 300px;
-            background-color: #c3c3c3;
+            background-color: #dddddd;
         }
 
         .card-label {
@@ -70,44 +70,6 @@
                                     </div>
                                 </div>
                             @endforeach
-                            {{--<div class="col-md-4 col-sm-6 col-xs-12 card-item">--}}
-                                {{--<a href="#">--}}
-                                    {{--<div class="card-image">--}}
-
-                                    {{--</div>--}}
-                                {{--</a>--}}
-
-                                {{--<div class="card-label">--}}
-                                    {{--<p><strong>Event Title</strong></p>--}}
-                                    {{--<p>Event Description</p>--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
-
-                            {{--<div class="col-md-4 col-sm-6 col-xs-12 card-item">--}}
-                                {{--<a href="#">--}}
-                                    {{--<div class="card-image">--}}
-
-                                    {{--</div>--}}
-                                {{--</a>--}}
-
-                                {{--<div class="card-label">--}}
-                                    {{--<p><strong>Event Title</strong></p>--}}
-                                    {{--<p>Event Description</p>--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
-
-                            {{--<div class="col-md-4 col-sm-6 col-xs-12 card-item">--}}
-                                {{--<a href="#">--}}
-                                    {{--<div class="card-image">--}}
-
-                                    {{--</div>--}}
-                                {{--</a>--}}
-
-                                {{--<div class="card-label">--}}
-                                    {{--<p><strong>Event Title</strong></p>--}}
-                                    {{--<p>Event Description</p>--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
                         </div>
                     </div>
                 </div>

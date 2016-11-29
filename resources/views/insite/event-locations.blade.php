@@ -10,13 +10,13 @@
         #card-container {
             margin-top: 200px;
             display: inline-block;
-            border-left: 1px solid #c3c3c3;
+            border-left: 1px solid #dddddd;
         }
 
         .card-image {
             width: 100%;
             height: 300px;
-            background-color: #c3c3c3;
+            background-color: #dddddd;
         }
 
         .card-label {

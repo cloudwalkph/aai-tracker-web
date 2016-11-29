@@ -12,6 +12,19 @@
 
     <!-- Styles -->
     <link href="/css/app.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #fbfbfb;
+        }
+
+        .btn-primary {
+            background-color: #0b3757;
+        }
+
+        .form-control {
+            border-radius: 1px;
+        }
+    </style>
     @yield('page-css');
 
     <!-- Scripts -->
