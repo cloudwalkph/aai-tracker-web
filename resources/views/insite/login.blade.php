@@ -6,11 +6,21 @@
             position: relative;
             top: 50%;
             transform: translateY(50%);
-            margin-top: 200px;
         }
 
         .btn {
             width: 100%;
+        }
+
+        .logo {
+            width: 100%;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .logo img {
+            width: 100%;
+            max-width: 400px;
         }
     </style>
 @endsection
@@ -19,6 +29,10 @@
     <div class="container login">
         <div class="row">
             <div class="col-md-6 col-md-offset-3">
+                <div class="logo">
+                    <img src="/images/insite-logo.png" alt="Activations Insite logo">
+                </div>
+
                 <form class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">
                     {{ csrf_field() }}
 
