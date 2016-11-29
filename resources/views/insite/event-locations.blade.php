@@ -211,6 +211,14 @@
                         {{ csrf_field() }}
                     </form>
                 </div>
+
+                <div class="modal fade answersModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            Problem with loading data
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
