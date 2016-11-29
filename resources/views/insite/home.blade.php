@@ -35,6 +35,25 @@
             cursor: pointer;
         }
 
+        .logo {
+            width: 100%;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .logo img {
+            width: 100%;
+            max-width: 200px;
+        }
+
+        #logout {
+            display: inline;
+            font-size: 25px;
+            text-decoration: underline;
+            cursor: pointer;
+            color: #646363;
+        }
+
         hr {
             border: none;
             height: 1px;
@@ -73,9 +92,20 @@
                         </div>
                     </div>
                 </div>
-
-
                 <hr>
+
+                <div class="logo">
+                    <img src="/images/insite-logo.png" alt="Activations Insite logo"> <br>
+                    <a href="{{ url('/logout') }}" id="logout"
+                       onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                        Logout
+                    </a>
+
+                    <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+                        {{ csrf_field() }}
+                    </form>
+                </div>
             </div>
         </div>
     </div>
