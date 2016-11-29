@@ -87,12 +87,21 @@ class EventAnswersService {
     {
         $result = [];
         $today = Carbon::now('Asia/Manila');
+        $date = $today->toDateString();
 
-        $events = Event::whereDate('start_date', '>=', $today->toDateString())
-            ->whereDate('end_date', '<=', $today->toDateString())
+        $events = Event::whereDate('start_date', '<=', $date)
+            ->whereDate('end_date', '>=', $date)
             ->get();
 
+        foreach ($events as $event) {
+            $count = $this->getAnswersCountByEvent($event->id);
 
+            $event['total_hits'] = $count;
+
+            $result[] = $event;
+        }
+
+        return $result;
     }
 
     /**

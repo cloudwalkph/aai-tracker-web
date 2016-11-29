@@ -7,6 +7,7 @@ use App\Models\EventUser;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class HomeController extends Controller {
 
@@ -23,6 +24,8 @@ class HomeController extends Controller {
         foreach ($eventsForUser as $userEvent) {
             $event = Event::where('id', $userEvent->event_id)->first();
             $event['status'] = $this->getStatus($event);
+            $event['status-slug'] = Str::slug($event['status']);
+
             $events[] = $event->toArray();
         }
 

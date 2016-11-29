@@ -38,10 +38,23 @@
             font-size: 25px;
             font-weight: 500;
             color: #646363;
+            padding: 0;
         }
 
         .hit-statistics li {
             list-style: none;
+        }
+
+        .not-started {
+            color: #646363;
+        }
+
+        .finished {
+            color: #802221;
+        }
+
+        .on-going {
+            color: #2f8030;
         }
 
         .card-label {
@@ -61,11 +74,11 @@
 
         .event-status {
             position: absolute;
-            top: 20px;
+            top: 30px;
             left: 50%;
             transform: translate(-50%, -50%);
             font-weight: 600;
-            font-size: 25px;
+            font-size: 35px;
         }
 
         .logo {
@@ -99,13 +112,19 @@
 @section('page-js')
     @if (count($events))
         <script type="application/javascript">
-            {{--var source = new EventSource('/api/v1/events/{{ $event->id }}/answers');--}}
-            {{--source.addEventListener("message", function(res) {--}}
-                {{--var jsonData = JSON.parse(res.data);--}}
+            var source = new EventSource('/api/v1/events/hits');
+            var hitsWorker = new Worker('/js/hits-updater.js');
 
-                {{--drawChart('#pieChartContainer1 svg', jsonData.data['Gender']);--}}
-                {{--drawChart('#pieChartContainer2 svg', jsonData.data['Age Group']);--}}
-            {{--}, false)--}}
+            source.addEventListener("message", function(res) {
+                var jsonData = JSON.parse(res.data);
+
+                hitsWorker.postMessage(jsonData);
+            }, false);
+
+            hitsWorker.onmessage = function(e) {
+                var element = document.getElementById(e.data.id);
+                element.innerHTML = e.data.event.total_hits;
+            };
         </script>
     @endif
 @endsection
@@ -124,13 +143,15 @@
                         <div class="row">
                             @foreach ($events as $event)
                                 <div class="col-md-4 col-sm-6 col-xs-12 card-item">
-                                    <h4 class="event-status">{{ $event['status'] }}</h4>
+                                    <h4 class="event-status {{ $event['status-slug'] }}">{{ $event['status'] }}</h4>
 
                                     <a href="/insite/events/{{ $event['id'] }}">
                                         <div class="card-image">
                                             <ul class="hit-statistics">
-                                                <li>Expected Hits: <span>1000</span></li>
-                                                <li>Hits: <span id="hits-{{ $event['id'] }}">500</span></li>
+                                                <li>
+                                                    Hits <br>
+                                                    <span id="hits-{{ $event['id'] }}">500</span>/<span>1000</span>
+                                                </li>
                                             </ul>
                                         </div>
                                     </a>
