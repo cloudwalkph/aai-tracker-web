@@ -97,4 +97,31 @@ class EventAnswersController extends Controller {
 
         return $response;
     }
+
+    public function getEventsHitCount($eventId)
+    {
+        $response = new StreamedResponse(function() use ($eventId) {
+            $answersCount = 0;
+            $newAnswersCount = $this->eventAnswerService->getAnswersCountByEvent($eventId);
+
+            if ($newAnswersCount != $answersCount) {
+                $answers = $this->eventAnswerService->getAnswersByEvent($eventId);
+                $json = [
+                    'data'      => $answers,
+                    'status'    => 200
+                ];
+
+                echo 'data: ' . json_encode($json) . "\n\n";
+                ob_flush();
+                flush();
+            }
+
+            sleep(3);
+            $answersCount = $newAnswersCount;
+        }, 200);
+
+        $response->headers->set('Content-Type', 'text/event-stream');
+
+        return $response;
+    }
 }

@@ -3,10 +3,12 @@ namespace App\AAI\Services;
 
 use App\AAI\Modules\EventAnswers\Repositories\EventAnswersRepository;
 use App\AAI\Modules\EventLocationAnswers\Repositories\EventLocationAnswersRepository;
+use App\Models\Event;
 use App\Models\EventAnswer;
 use App\Models\EventLocationAnswer;
 use App\Models\EventPoll;
 use App\Models\Poll;
+use Carbon\Carbon;
 
 class EventAnswersService {
 
@@ -79,6 +81,18 @@ class EventAnswersService {
         }
 
         return $result;
+    }
+
+    public function getAnswersCountForAllEvents()
+    {
+        $result = [];
+        $today = Carbon::now('Asia/Manila');
+
+        $events = Event::whereDate('start_date', '>=', $today->toDateString())
+            ->whereDate('end_date', '<=', $today->toDateString())
+            ->get();
+
+
     }
 
     /**

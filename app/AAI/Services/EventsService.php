@@ -7,6 +7,8 @@ use App\AAI\Modules\EventPolls\Repositories\EventPollsRepository;
 use App\AAI\Modules\Events\Repositories\EventsRepository;
 use App\AAI\Modules\Polls\Repositories\PollsRepository;
 use App\Models\EventAnswer;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
 
 class EventsService {
     protected $events;
@@ -41,11 +43,42 @@ class EventsService {
                 'start_date'    => $event->start_date,
                 'end_date'      => $event->end_date,
                 'polls'         => $polls,
-                'locations'     => $locations
+                'locations'     => $locations,
+                'status'        => $this->getStatus($event)
             ];
         }
 
         return $result;
+    }
+
+    private function getStatus(Model $event)
+    {
+        $startDate = Carbon::createFromTimestamp(strtotime($event->start_date));
+        $endDate = Carbon::createFromTimestamp(strtotime($event->end_date));
+        $today = Carbon::today('Asia/Manila');
+
+
+        if ($startDate->isFuture()) {
+            return 'Not Started';
+        }
+
+        if ($endDate->isPast()) {
+            return 'Finished';
+        }
+
+        if ($startDate->isToday()) {
+            return 'On Going';
+        }
+
+        if ($today->diffInDays($endDate) > 0) {
+            return 'Finished';
+        }
+
+        if ($today->between($startDate, $endDate) ) {
+            return 'On Going';
+        }
+
+        return 'Not Started';
     }
 
     private function getPolls($eventId)
