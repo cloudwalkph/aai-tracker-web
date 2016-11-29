@@ -19,6 +19,10 @@ function drawChart(container, data) {
             .transition().duration(350)
             .call(chart);
 
+        d3.selectAll('.nv-legend')
+            .attr('transform', 'translate(-120, 280)')
+            .attr('text-align', 'center');
+
         nv.utils.windowResize(chart.update);
 
         return chart;
