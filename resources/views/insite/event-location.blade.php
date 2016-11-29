@@ -100,7 +100,7 @@
                     <hr>
                     <div class="col-md-4 col-sm-12 col-xs-12">
                         <div class="video-feed">
-                            {{--<img src="http://192.168.8.103:81/videostream.cgi?user=admin&pwd=888888" alt="">--}}
+                            <img src="http://{{ $location->ip }}:81/videostream.cgi?user=admin&pwd=888888" alt="">
                         </div>
                     </div>
 
