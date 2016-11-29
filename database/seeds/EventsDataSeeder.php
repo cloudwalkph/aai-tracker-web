@@ -72,17 +72,20 @@ class EventsDataSeeder extends Seeder
             $eventData = Event::create($event);
             EventLocation::create([
                 'event_id'  => $eventData->id,
-                'name'  => 'SM Mall of Asia'
+                'name'  => 'SM Mall of Asia',
+                'expected_hits' => 1000
             ]);
 
             EventLocation::create([
                 'event_id'  => $eventData->id,
-                'name'  => 'SM Megamall'
+                'name'  => 'SM Megamall',
+                'expected_hits' => 900
             ]);
 
             EventLocation::create([
                 'event_id'  => $eventData->id,
-                'name'  => 'SM Fairview'
+                'name'  => 'SM Fairview',
+                'expected_hits' => 500
             ]);
         }
 
