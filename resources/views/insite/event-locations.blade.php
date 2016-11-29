@@ -121,7 +121,7 @@
             source.addEventListener("message", function(res) {
                 var jsonData = JSON.parse(res.data);
 
-                drawChart2('#pieChartContainer1 svg', jsonData.data['Gender']);
+                drawChart('#pieChartContainer1 svg', jsonData.data['Gender']);
                 drawChart('#pieChartContainer2 svg', jsonData.data['Age Group']);
             }, false);
 
