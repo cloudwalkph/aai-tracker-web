@@ -24,8 +24,8 @@
         }
 
         .video-feed {
-            width: 100%;
-            height: 500px;
+            width: 640px;
+            height: 360px;
             background-color: #777777;
         }
 
