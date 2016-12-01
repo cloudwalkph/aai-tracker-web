@@ -40,7 +40,6 @@ function drawTimeChart(container, data) {
         var chart = nv.models.lineWithFocusChart();
 
         var customTimeFormat = d3.time.format.multi([
-            ["%-I:%M:%S %p", function(d) { return d.getSeconds(); }],
             ["%-I:%M %p", function(d) { return d.getMinutes(); }],
             ["%-I %p", function(d) { return d.getHours(); }],
             ["%b %-d", function(d) { return d.getDate() != 1; }],
