@@ -118,18 +118,36 @@
             var hitSource = new EventSource('/api/v1/events/hits/{{ $event->id }}');
             var hitsWorker = new Worker('/js/hits-updater.js');
 
+            var genderData;
+            var ageGroupData;
+            var hitsData;
+
             source.addEventListener("message", function(res) {
                 var jsonData = JSON.parse(res.data);
 
-                drawChart('#pieChartContainer1 svg', jsonData.data['Gender']);
-                drawChart('#pieChartContainer2 svg', jsonData.data['Age Group']);
+                if (genderData !== JSON.stringify(jsonData.data['Gender'])) {
+                    drawChart('#pieChartContainer1 svg', jsonData.data['Gender']);
+
+                    genderData = JSON.stringify(jsonData.data['Gender']);
+                }
+
+                if (ageGroupData !== JSON.stringify(jsonData.data['Age Group'])) {
+                    drawChart('#pieChartContainer2 svg', jsonData.data['Age Group']);
+
+                    ageGroupData = JSON.stringify(jsonData.data['Age Group']);
+                }
             }, false);
 
             // Hits
             hitSource.addEventListener("message", function(res) {
                 var jsonData = JSON.parse(res.data);
 
-                hitsWorker.postMessage(jsonData);
+                if (hitsData !== JSON.stringify(jsonData)) {
+                    hitsWorker.postMessage(jsonData);
+
+                    hitsData = JSON.stringify(jsonData);
+                }
+
             }, false);
 
             hitsWorker.onmessage = function(e) {

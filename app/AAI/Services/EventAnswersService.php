@@ -124,6 +124,17 @@ class EventAnswersService {
         return $result;
     }
 
+    public function getAnswersCountForLocationWithTimestamp($eventId, $locationId)
+    {
+        $today = Carbon::now('Asia/Manila');
+
+        $count = $this->getAnswersCountByLocationIdWithTimestamp($locationId);
+
+        $result = $count;
+
+        return $result;
+    }
+
     /**
      * Get Answers Count By Event Id
      *
@@ -182,6 +193,27 @@ class EventAnswersService {
     public function getAnswersCountByLocationId($locationId)
     {
         return $this->eventLocationAnswer->findByKey('event_location_id',$locationId)->count();
+    }
+
+    public function getAnswersCountByLocationIdWithTimestamp($locationId)
+    {
+        $hits = EventLocationAnswer::select('created_at', \DB::raw('count(id) as hits'))
+            ->where('event_location_id', $locationId)
+            ->groupBy('created_at')
+            ->get();
+
+        $result = ['key' => 'Hits'];
+        foreach ($hits as $hit) {
+            $timestamp = strtotime($hit->created_at);
+            \Log::info($timestamp);
+
+            $result['values'][] = [
+                'x' => $timestamp,
+                'y' => $hit->hits
+            ];
+        }
+
+        return [$result];
     }
 
     private function createLocationAnswer($input)

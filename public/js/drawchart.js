@@ -34,3 +34,51 @@ function drawChart(container, data) {
         return chart;
     });
 }
+
+function drawTimeChart(container, data) {
+    nv.addGraph(function() {
+        var chart = nv.models.lineWithFocusChart();
+
+        var customTimeFormat = d3.time.format.multi([
+            ["%-I:%M:%S %p", function(d) { return d.getSeconds(); }],
+            ["%-I:%M %p", function(d) { return d.getMinutes(); }],
+            ["%-I %p", function(d) { return d.getHours(); }],
+            ["%b %-d", function(d) { return d.getDate() != 1; }],
+            ["%b %-d", function(d) { return d.getMonth(); }],
+            ["%Y", function() { return true; }]
+        ]);
+
+        var xScale = d3.time.scale();
+
+        chart.xScale(xScale);
+
+        chart.xAxis
+            .showMaxMin(false)
+            .axisLabel('Time')
+            .tickFormat(function(d) {
+                return customTimeFormat(new Date(d * 1000));
+            });
+
+        chart.x2Axis
+            .axisLabel('Time')
+            .ticks(d3.time.minute, 5)
+            .tickFormat(function(d) {
+                return customTimeFormat(new Date(d * 1000));
+            });
+
+        chart.yAxis
+            .tickFormat(d3.format("d"));
+
+        chart.y2Axis
+            .tickFormat(d3.format("d"));
+
+        d3.select(container)
+            .datum(data)
+            .transition().duration(500)
+            .call(chart);
+
+        nv.utils.windowResize(chart.update);
+
+        return chart;
+    });
+}

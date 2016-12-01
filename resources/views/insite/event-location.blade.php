@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="/lib/nvd3/nvd3.css">
     <style>
         .dasboard {
-            margin-top: 10px;
+            margin-top: 5px;
         }
 
         .card-label p {
@@ -15,12 +15,17 @@
 
         #pieChartContainer1 {
             width: 100%;
-            height: 300px;
+            height: 250px;
         }
 
         #pieChartContainer2 {
             width: 100%;
-            height: 300px;
+            height: 250px;
+        }
+
+        #timeChart {
+            width: 100%;
+            height: 250px;
         }
 
         .video-feed {
@@ -37,7 +42,7 @@
 
         .logo img {
             width: 100%;
-            max-width: 200px;
+            max-width: 150px;
         }
 
         #logout {
@@ -76,12 +81,38 @@
 
     <script type="application/javascript">
         var source = new EventSource('/api/v1/events/{{ $event->id }}/locations/{{ $location->id }}/answers');
+        var timestampedSource = new EventSource('/api/v1/events/hits/{{ $event->id }}/locations/{{ $location->id }}/timestamped');
+
+        var genderData;
+        var ageGroupData;
+        var timeChartData;
+
         source.addEventListener("message", function(res) {
             var jsonData = JSON.parse(res.data);
 
-            drawChart('#pieChartContainer1 svg', jsonData.data['Gender']);
-            drawChart('#pieChartContainer2 svg', jsonData.data['Age Group']);
-        }, false)
+            if (genderData !== JSON.stringify(jsonData.data['Gender'])) {
+                drawChart('#pieChartContainer1 svg', jsonData.data['Gender']);
+
+                genderData = JSON.stringify(jsonData.data['Gender']);
+            }
+
+            if (ageGroupData !== JSON.stringify(jsonData.data['Age Group'])) {
+                drawChart('#pieChartContainer2 svg', jsonData.data['Age Group']);
+
+                ageGroupData = JSON.stringify(jsonData.data['Age Group']);
+            }
+
+        }, false);
+
+        timestampedSource.addEventListener("message", function(res) {
+            var jsonData = JSON.parse(res.data);
+
+            if (timeChartData !== JSON.stringify(jsonData.data)) {
+                drawTimeChart('#timeChart svg', jsonData.data);
+
+                timeChartData = JSON.stringify(jsonData.data);
+            }
+        });
     </script>
 @endsection
 
@@ -113,6 +144,12 @@
 
                         <div class="col-md-6">
                             <div id="pieChartContainer2">
+                                <svg></svg>
+                            </div>
+                        </div>
+
+                        <div class="col-md-10 col-xs-12 col-md-offset-1 col-xs-offset-1">
+                            <div id="timeChart" style="margin-top: 30px">
                                 <svg></svg>
                             </div>
                         </div>
