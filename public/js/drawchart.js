@@ -48,10 +48,7 @@ function drawTimeChart(container, data) {
             ["%Y", function() { return true; }]
         ]);
 
-        var xScale = d3.time.scale();
-
-        chart.xScale(xScale);
-
+        chart.xScale(d3.time.scale());
         chart.xAxis
             .showMaxMin(false)
             .axisLabel('Time')
@@ -60,8 +57,8 @@ function drawTimeChart(container, data) {
             });
 
         chart.x2Axis
+            .showMaxMin(false)
             .axisLabel('Time')
-            .ticks(d3.time.minute, 5)
             .tickFormat(function(d) {
                 return customTimeFormat(new Date(d * 1000));
             });

@@ -197,14 +197,14 @@ class EventAnswersService {
 
     public function getAnswersCountByLocationIdWithTimestamp($locationId)
     {
-        $hits = EventLocationAnswer::select('created_at', \DB::raw('count(id) as hits'))
+        $hits = EventLocationAnswer::select(\DB::raw('DATE_FORMAT(created_at, \'%Y-%m-%d %H:%i\') as date_group'), \DB::raw('count(id) as hits'))
             ->where('event_location_id', $locationId)
-            ->groupBy('created_at')
+            ->groupBy('date_group')
             ->get();
 
         $result = ['key' => 'Hits'];
         foreach ($hits as $hit) {
-            $timestamp = strtotime($hit->created_at);
+            $timestamp = strtotime($hit->date_group);
             \Log::info($timestamp);
 
             $result['values'][] = [
