@@ -2,6 +2,7 @@
 
 @section('page-css')
     <link rel="stylesheet" href="/lib/nvd3/nvd3.css">
+    <link href="http://vjs.zencdn.net/5.8.8/video-js.css" rel="stylesheet">
     <style>
         .dasboard {
             margin-top: 5px;
@@ -78,6 +79,8 @@
     <script src="/js/d3.js"></script>
     <script src="/lib/nvd3/nvd3.min.js"></script>
     <script src="/js/drawchart.js"></script>
+    <script src="http://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
+    <script src="http://vjs.zencdn.net/5.8.8/video.js"></script>
 
     <script type="application/javascript">
         var source = new EventSource('/api/v1/events/{{ $event->id }}/locations/{{ $location->id }}/answers');
@@ -130,8 +133,16 @@
                 <div class="row">
                     <hr>
                     <div class="col-md-4 col-sm-12 col-xs-12">
+                        <p>Channel: {{ $hash }}</p>
                         <div class="video-feed">
-                            <img src="http://{{ $location->ip }}:81/videostream.cgi?user=admin&pwd=888888" alt="">
+                            {{--<img src="http://{{ $location->ip }}:81/videostream.cgi?user=admin&pwd=888888" alt="">--}}
+                            <video id="my-video" class="video-js" controls preload="auto" width="640" height="360" data-setup="{}">
+                                <source src="rtmp://54.249.112.76/live/{{ $hash }}" type='rtmp/mp4'>
+                                <p class="vjs-no-js">
+                                    To view this video please enable JavaScript, and consider upgrading to a web browser that
+                                    <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+                                </p>
+                            </video>
                         </div>
                     </div>
 

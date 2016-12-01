@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Event;
 use App\Models\EventLocation;
 use Illuminate\Http\Request;
+use Hashids\Hashids;
 
 class EventsController extends Controller {
 
@@ -31,8 +32,12 @@ class EventsController extends Controller {
         $event = Event::where('id', $eventId)->first();
         $location = EventLocation::where('id', $locationId)->first();
 
+        $hashIds = new Hashids('activations', 5);
+        $hash = $hashIds->encode($location->id);
+
         return view('insite.event-location')
             ->with('location', $location)
-            ->with('event', $event);
+            ->with('event', $event)
+            ->with('hash', $hash);
     }
 }
