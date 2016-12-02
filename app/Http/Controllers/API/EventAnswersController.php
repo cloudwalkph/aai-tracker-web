@@ -7,6 +7,7 @@ use App\AAI\Services\ImageToS3Service;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SaveAnswerRequest;
 use App\Http\Requests\UploadImageRequest;
+use Carbon\Carbon;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class EventAnswersController extends Controller {
@@ -36,6 +37,7 @@ class EventAnswersController extends Controller {
         $input = $request->all();
         $input['event_id'] = $eventId;
         $input['event_location_id'] = $locationId;
+        $input['hit_date'] = Carbon::createFromTimestamp(strtotime($input['hit_date']))->timestamp;
 
         // Save the answer
         $answer = $this->eventAnswerService->saveAnswer($input);

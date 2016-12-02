@@ -28,6 +28,7 @@ class SaveAnswerRequest extends FormRequest
             'uuid'              => 'required',
             'image'             => 'required',
             'answers'           => 'required',
+            'hit_date'          => 'required',
             'answers.*.poll_id' => 'required|exists:polls,id',
             'answers.*.value'   => 'required'
         ];
