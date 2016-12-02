@@ -18,7 +18,6 @@ class CreateEventAnswersTable extends Migration
             $table->integer('poll_id');
             $table->integer('event_location_answer_id');
             $table->string('value');
-            $table->timestamp('hit_date');
             $table->timestamps();
             $table->softDeletes();
         });

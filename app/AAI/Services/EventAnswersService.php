@@ -226,7 +226,8 @@ class EventAnswersService {
                 'event_id'      => $input['event_id'],
                 'user_id'       => $input['user_id'],
                 'event_location_id' => $input['event_location_id'],
-                'image'         => $input['image']
+                'image'         => $input['image'],
+                'hit_date'      => $input['hit_date']
             ];
 
             // Create event location answer
