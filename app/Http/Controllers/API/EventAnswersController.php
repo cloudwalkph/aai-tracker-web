@@ -37,7 +37,7 @@ class EventAnswersController extends Controller {
         $input = $request->all();
         $input['event_id'] = $eventId;
         $input['event_location_id'] = $locationId;
-        $input['hit_date'] = Carbon::createFromTimestamp(strtotime($input['hit_date']))->timestamp;
+        $input['hit_date'] = Carbon::createFromTimestamp(strtotime($input['hit_date']))->toDateTimeString();
 
         // Save the answer
         $answer = $this->eventAnswerService->saveAnswer($input);

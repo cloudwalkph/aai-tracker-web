@@ -92,6 +92,7 @@
 
         source.addEventListener("message", function(res) {
             var jsonData = JSON.parse(res.data);
+            console.log(jsonData);
 
             if (genderData !== JSON.stringify(jsonData.data['Gender'])) {
                 drawChart('#pieChartContainer1 svg', jsonData.data['Gender']);
