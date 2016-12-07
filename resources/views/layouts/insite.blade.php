@@ -55,6 +55,21 @@
             fill: transparent !important;
             /* NEW */
         }
+
+        svg{
+            width: 100%;
+            height: 100%;
+        }
+        path.slice{
+            stroke-width:2px;
+        }
+
+        polyline{
+            opacity: .3;
+            stroke: black;
+            stroke-width: 2px;
+            fill: none;
+        }
     </style>
     @yield('page-css');
 
