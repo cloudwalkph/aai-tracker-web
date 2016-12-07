@@ -14,19 +14,19 @@ class UserTypesSeeder extends Seeder
         \App\Models\UserType::create([
             'type'  => 'admin',
             'label' => 'Admin',
-            'descrition'    => 'Main Admin'
+            'description'    => 'Main Admin'
         ]);
 
         \App\Models\UserType::create([
             'type'  => 'client',
             'label' => 'Client',
-            'descrition'    => 'Client of the event'
+            'description'    => 'Client of the event'
         ]);
 
         \App\Models\UserType::create([
             'type'  => 'sampler',
             'label' => 'Sampler',
-            'descrition'    => 'Samplers'
+            'description'    => 'Samplers'
         ]);
     }
 }
