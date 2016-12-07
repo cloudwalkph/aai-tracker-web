@@ -19,7 +19,7 @@ class EventsDataSeeder extends Seeder
             [
                 'name'          => 'Magnum',
                 'description'   => 'Selecta Magnum Event',
-                'start_date'    => '2016-12-09',
+                'start_date'    => '2016-12-08',
                 'end_date'      => '2016-12-30',
             ]
         ];
