@@ -227,7 +227,10 @@ class EventAnswersService {
                 'user_id'       => $input['user_id'],
                 'event_location_id' => $input['event_location_id'],
                 'image'         => $input['image'],
-                'hit_date'      => $input['hit_date']
+                'hit_date'      => $input['hit_date'],
+                'name'          => isset($input['name']) ? $input['name'] : '',
+                'contact_number'    => isset($input['contact_number']) ? $input['contact_number'] : '',
+                'email'         => isset($input['email']) ? $input['email'] : '',
             ];
 
             // Create event location answer
