@@ -84,6 +84,35 @@ class EventAnswersService {
         return $result;
     }
 
+    public function getAnswersByEventOfUser($userId, $eventId)
+    {
+        $eventLocationAnswers = EventLocationAnswer::where('event_id', $eventId)
+            ->where('user_id', $userId)->get();
+
+        $eventPolls = EventPoll::where('event_id', $eventId)->get();
+
+        $result = [];
+        foreach ($eventPolls as $poll) {
+            $pollInfo = Poll::where('id', $poll->poll_id)->first();
+
+            // set key for poll
+            foreach ($eventLocationAnswers as $locationAnswer) {
+                $eventAnswers = EventAnswer::where('event_location_answer_id', $locationAnswer->id)
+                    ->where('poll_id', $pollInfo->id)
+                    ->get();
+
+                foreach ($eventAnswers as $answer) {
+                    $result[$pollInfo->name][] = [
+                        'answer' => 1,
+                        'label'  => ucwords($answer->value)
+                    ];
+                }
+            }
+        }
+
+        return $result;
+    }
+
     public function getAnswersCountForAllEvents()
     {
         $result = [];

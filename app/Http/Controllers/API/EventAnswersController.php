@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\SaveAnswerRequest;
 use App\Http\Requests\UploadImageRequest;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class EventAnswersController extends Controller {
@@ -70,6 +71,17 @@ class EventAnswersController extends Controller {
         $response->headers->set('Content-Type', 'text/event-stream');
 
         return $response;
+    }
+
+    public function getAnswersCreatedByUser(Request $request, $eventId)
+    {
+        $user = $request->user();
+        $answers = $this->eventAnswerService->getAnswersByEventOfUser($user->id, $eventId);
+
+        return response()->json([
+            'data' => $answers,
+            'status' => 200
+        ], 200);
     }
 
     public function getAnswerByLocation($eventId, $locationId)

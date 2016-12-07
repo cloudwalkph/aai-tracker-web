@@ -24,6 +24,10 @@ Route::group(['prefix' => 'v1'], function() {
         Route::get('/', 'API\EventsController@getEvents');
         Route::get('/hits', 'API\EventAnswersController@getEventsHitCount');
         Route::get('/hits/{eventId}', 'API\EventAnswersController@getEventsHitCountByLocation');
+
+        Route::get('/hits/{eventId}/self', 'API\EventAnswersController@getAnswersCreatedByUser')
+            ->middleware('auth:api');
+
         Route::get('/hits/{eventId}/locations/{locationId}/timestamped', 'API\EventAnswersController@getLocationHits');
         Route::get('/{eventId}/answers', 'API\EventAnswersController@getAnswers');
         Route::get('/{eventId}/locations/{locationId}/answers', 'API\EventAnswersController@getAnswerByLocation');

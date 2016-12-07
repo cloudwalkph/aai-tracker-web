@@ -29,3 +29,8 @@ Route::group(['prefix' => 'insite'], function() {
         });
     });
 });
+
+
+Route::group(['prefix' => 'management'], function() {
+    Route::get('login', 'Management\LoginController@index');
+});
