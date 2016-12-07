@@ -18,7 +18,7 @@ class CreateEventLocationsTable extends Migration
             $table->integer('event_id')->unsigned();
             $table->string('name');
             $table->integer('expected_hits')->unsigned();
-            $table->string('ip')->default('');
+            $table->string('channel')->default('');
             $table->timestamps();
             $table->softDeletes();
 

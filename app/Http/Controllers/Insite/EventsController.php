@@ -32,12 +32,8 @@ class EventsController extends Controller {
         $event = Event::where('id', $eventId)->first();
         $location = EventLocation::where('id', $locationId)->first();
 
-        $hashIds = new Hashids('activations', 5);
-        $hash = $hashIds->encode($location->id);
-
         return view('insite.event-location')
             ->with('location', $location)
-            ->with('event', $event)
-            ->with('hash', $hash);
+            ->with('event', $event);
     }
 }
