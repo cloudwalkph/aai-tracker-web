@@ -15,6 +15,7 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('user_type_id')->unsigned();
             $table->string('first_name');
             $table->string('last_name');
             $table->string('company');
@@ -23,6 +24,11 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
+
+            // Foreign indexes
+            $table->foreign('user_type_id')->references('id')
+                ->on('user_types')
+                ->onDelete('cascade');
         });
     }
 
