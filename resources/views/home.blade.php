@@ -135,11 +135,21 @@
                 console.log("onMessageArrived:" + message.payloadString);
 
                 isConnected(message.payloadString);
+                isCameraConnected(message.payloadString);
             }
 
             function isConnected(payload) {
                 if (payload === 'status-connected') {
                     var device = document.querySelector('#raspi-1');
+
+                    device.classList.remove('not-connected');
+                    device.classList.add('connected');
+                }
+            }
+
+            function isCameraConnected(payload) {
+                if (payload === 'camera-connected') {
+                    var device = document.querySelector('#raspi-1-camera');
 
                     device.classList.remove('not-connected');
                     device.classList.add('connected');
