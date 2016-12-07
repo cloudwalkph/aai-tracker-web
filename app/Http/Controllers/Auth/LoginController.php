@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\UserType;
+use App\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -35,5 +38,38 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest', ['except' => 'logout']);
+    }
+
+    protected function sendLoginResponse(Request $request)
+    {
+        $request->session()->regenerate();
+
+        $this->clearLoginAttempts($request);
+
+        $userType = $this->getUserType($this->guard()->user());
+
+        switch ($userType->type) {
+            case 'admin':
+                $this->redirectTo = '/management/';
+                break;
+            case 'client':
+            default:
+                $this->redirectTo = '/insite';
+                break;
+        }
+
+        \Log::info($this->redirectTo);
+
+        return $this->authenticated($request, $this->guard()->user())
+            ?: redirect()->to($this->redirectPath());
+    }
+
+    private function getUserType($user)
+    {
+        $userType = UserType::select('type')
+            ->where('id', $user->user_type_id)
+            ->first();
+
+        return $userType;
     }
 }
