@@ -24,9 +24,7 @@ abstract class EloquentRepository implements EloquentInterface  {
 
     public function findByKey($key, $value, $expression = '=')
     {
-        $this->model->where($key, $expression, $value);
-
-        return $this;
+        return $this->model->where($key, $expression, $value);
     }
 
     public function update($id, $data)
