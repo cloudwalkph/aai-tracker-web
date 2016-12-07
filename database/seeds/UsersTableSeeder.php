@@ -32,7 +32,7 @@ class UsersTableSeeder extends Seeder
             'last_name'         => 'insite',
             'company'           => 'test company',
             'contact_number'    => '123123123',
-            'email'             => 'sampler@insite.com',
+            'email'             => 'client@insite.com',
             'password'          => bcrypt('password'),
         ]);
 
