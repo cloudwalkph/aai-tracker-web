@@ -145,7 +145,7 @@
                             </video>
                         </div>
                         <div style="text-align: center">
-                            <a href="miitown.com">View GPS Data</a>
+                            <a href="http://miitown.com" target="_blank">View GPS Data</a>
                         </div>
                     </div>
 
