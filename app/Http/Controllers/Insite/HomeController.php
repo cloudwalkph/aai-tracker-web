@@ -34,7 +34,9 @@ class HomeController extends Controller {
             $events[] = $event->toArray();
         }
 
-        return view('insite.home')->with('events', $events);
+        return view('insite.home')
+            ->with('events', $events)
+            ->with('user', $user);
     }
 
     private function getStatus(Model $event)

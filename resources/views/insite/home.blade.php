@@ -133,7 +133,7 @@
     <div class="dasboard">
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
-                <h3 class="title-name">Hi <strong>John Dela Cruz</strong></h3>
+                <h3 class="title-name">Hi <strong>{{ ucwords($user['first_name'] . ' ' . $user['last_name']) }}</strong></h3>
                 <h4 class="title-name">Here are your Active Projects</h4>
                 <hr>
 
