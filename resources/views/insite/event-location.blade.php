@@ -136,7 +136,7 @@
                     <div class="col-md-4 col-sm-12 col-xs-12">
                         <div class="video-feed">
                             {{--<img src="http://{{ $location->ip }}:81/videostream.cgi?user=admin&pwd=888888" alt="">--}}
-                            <video id="my-video" class="video-js" controls preload="auto" width="600" height="360" data-setup="{}">
+                            <video id="my-video" class="video-js" controls preload="auto" autoplay width="600" height="360" data-setup="{}">
                                 <source src="rtmp://54.238.155.160/live/{{ $location->channel }}" type='rtmp/mp4'>
                                 <p class="vjs-no-js">
                                     To view this video please enable JavaScript, and consider upgrading to a web browser that
