@@ -8,6 +8,6 @@ class LoginController extends Controller {
     {
         config(['app.name' => 'Insite Management Login']);
 
-        return view('auth.login');
+        return view('insite.login');
     }
 }
