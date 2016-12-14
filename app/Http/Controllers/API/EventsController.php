@@ -3,6 +3,7 @@ namespace App\Http\Controllers\API;
 
 use App\AAI\Services\EventsService;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 
 class EventsController extends Controller {
     protected $eventService;
@@ -12,7 +13,7 @@ class EventsController extends Controller {
         $this->eventService = $eventService;
     }
 
-    public function getEvents()
+    public function getEvents(Request $request)
     {
         $response = [
             'data'      => $this->eventService->getFullEvents(),
