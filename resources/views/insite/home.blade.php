@@ -97,14 +97,14 @@
             font-size: 25px;
             text-decoration: underline;
             cursor: pointer;
-            color: #646363;
+            color: #fff;
         }
 
         hr {
             border: none;
             height: 1px;
-            color: #aaa;
-            background-color: #aaa;
+            color: #f47f20;
+            background-color: #f47f20;
         }
     </style>
 @endsection
@@ -133,7 +133,7 @@
     <div class="dasboard">
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
-                <h3 class="title-name">Hi <strong>{{ ucwords($user['first_name'] . ' ' . $user['last_name']) }}</strong></h3>
+                <h3 class="title-name">Hi <span class="orenji"><strong>{{ ucwords($user['first_name'] . ' ' . $user['last_name']) }}</strong></span></h3>
                 <h4 class="title-name">Here are your Active Projects</h4>
                 <hr>
 
