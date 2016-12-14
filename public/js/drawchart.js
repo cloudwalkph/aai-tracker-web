@@ -69,7 +69,7 @@ function showHitsModal(dataKey) {
             hitsTable.DataTable({
                 data: json.data,
                 columns: [
-                    {title: 'UUID', data: 'uuid'},
+                    {title: 'UUID', data: 'uuid', visible: false},
                     {title: 'Image', data: 'image', render: function(data, type, full, meta) {
                         return '<a href="#" data-featherlight="' + data + '"><img src="'+data+'" class="hit-image"></a>'
                     }},
