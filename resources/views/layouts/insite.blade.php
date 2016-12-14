@@ -14,12 +14,12 @@
     <link href="/css/app.css" rel="stylesheet">
     <style>
         body {
-            background-color: #383938;
-            color: #fff;
+            background-color: #383938 !important;
+            color: #fff !important;
         }
 
         .modal {
-            color: #000;
+            color: #000 !important;
         }
 
         .btn-primary {
@@ -120,7 +120,7 @@
         }
 
         .hit-image {
-            height: 250px;
+            height: 150px;
         }
     </style>
     @yield('page-css')
