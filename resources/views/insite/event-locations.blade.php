@@ -8,15 +8,21 @@
     <style>
         .dasboard {
             margin-top: 10px;
+            height: 1vh%;
         }
 
         .card-container {
-            display: inline-block;
+            margin-top: 150px;
+            display: inline;
+            overflow: hidden;
+            padding: 0 65px;
+            min-height: 350px;
+            max-height: 350px;
         }
 
         .card-image {
+            height: 300px;
             width: 100%;
-            height: 250px;
             background-color: #dddddd;
             display: table;
             text-align: center;
@@ -52,11 +58,15 @@
             line-height: 0.7em;
             text-align: center;
             font-size: 20px;
+            margin-bottom: 20px;
         }
 
         .card-item {
-            margin-top: 130px;
+            padding: 10px 10px;
+            height: 100%;
+            width: 100%;
             cursor: pointer;
+            float: left;
         }
 
         #pieChartContainer1 {
@@ -82,6 +92,8 @@
             width: 100%;
             margin-bottom: 20px;
             text-align: center;
+            position: fixed;
+            bottom: 0;
         }
 
         .logo img {
@@ -94,7 +106,7 @@
             font-size: 25px;
             text-decoration: underline;
             cursor: pointer;
-            color: #646363;
+            color: #fff;
         }
 
         hr {
@@ -114,29 +126,29 @@
 
     @if ($event)
         <script type="application/javascript">
-            var source = new EventSource('/api/v1/events/{{ $event->id }}/answers');
+            {{--var source = new EventSource('/api/v1/events/{{ $event->id }}/answers');--}}
             var hitSource = new EventSource('/api/v1/events/hits/{{ $event->id }}');
             var hitsWorker = new Worker('/js/hits-updater.js');
-
-            var genderData;
-            var ageGroupData;
+//
+//            var genderData;
+//            var ageGroupData;
             var hitsData;
 
-            source.addEventListener("message", function(res) {
-                var jsonData = JSON.parse(res.data);
-
-                if (genderData !== JSON.stringify(jsonData.data['Gender'])) {
-                    drawChart('#pieChartContainer1 svg', jsonData.data['Gender']);
-
-                    genderData = JSON.stringify(jsonData.data['Gender']);
-                }
-
-                if (ageGroupData !== JSON.stringify(jsonData.data['Age Group'])) {
-                    drawChart('#pieChartContainer2 svg', jsonData.data['Age Group']);
-
-                    ageGroupData = JSON.stringify(jsonData.data['Age Group']);
-                }
-            }, false);
+//            source.addEventListener("message", function(res) {
+//                var jsonData = JSON.parse(res.data);
+//
+//                if (genderData !== JSON.stringify(jsonData.data['Gender'])) {
+//                    drawChart('#pieChartContainer1 svg', jsonData.data['Gender']);
+//
+//                    genderData = JSON.stringify(jsonData.data['Gender']);
+//                }
+//
+//                if (ageGroupData !== JSON.stringify(jsonData.data['Age Group'])) {
+//                    drawChart('#pieChartContainer2 svg', jsonData.data['Age Group']);
+//
+//                    ageGroupData = JSON.stringify(jsonData.data['Age Group']);
+//                }
+//            }, false);
 
             // Hits
             hitSource.addEventListener("message", function(res) {
@@ -177,25 +189,25 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-4 col-sm-12 col-xs-12 charts">
-                        <div class="col-md-12">
-                            <div id="pieChartContainer1">
-                                <svg></svg>
-                            </div>
-                        </div>
+                    {{--<div class="col-md-4 col-sm-12 col-xs-12 charts">--}}
+                        {{--<div class="col-md-12">--}}
+                            {{--<div id="pieChartContainer1">--}}
+                                {{--<svg></svg>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
 
-                        <div class="col-md-12">
-                            <div id="pieChartContainer2">
-                                <svg></svg>
-                            </div>
-                        </div>
-                    </div>
+                        {{--<div class="col-md-12">--}}
+                            {{--<div id="pieChartContainer2">--}}
+                                {{--<svg></svg>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
 
                     <!-- Event List -->
-                    <div class="card-container col-md-7 col-sm-12 col-xs-12">
-                        <div class="row events">
+                    <div class="card-container col-md-12 col-sm-12 col-xs-12">
+                        <div class="events">
                             @foreach ($locations as $location)
-                                <div class="col-md-4 col-sm-6 col-xs-12 card-item">
+                                <div class="card-item">
                                     <a href="/insite/events/{{ $event['id'] }}/locations/{{ $location['id'] }}">
                                         <div class="card-image">
                                             <ul class="hit-statistics">

@@ -98,7 +98,7 @@
             background-color: #c8691a;
         }
     </style>
-    @yield('page-css');
+    @yield('page-css')
 
     <!-- Scripts -->
     <script>
@@ -114,6 +114,6 @@
 
 <!-- Scripts -->
 <script src="/js/app.js"></script>
-@yield('page-js');
+@yield('page-js')
 </body>
 </html>
