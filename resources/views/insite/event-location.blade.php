@@ -25,9 +25,12 @@
         }
 
         #timeChart {
-            background-color: #fbfbfb;
             width: 100%;
-            height: 250px;
+            height: 180px;
+        }
+
+        #timeChart svg {
+            background-color: #fbfbfb;
         }
 
         .video-feed {
@@ -40,6 +43,8 @@
             width: 100%;
             margin-bottom: 20px;
             text-align: center;
+            position: fixed;
+            bottom: 0;
         }
 
         .logo img {
@@ -78,6 +83,8 @@
             text-align: center;
             font-size: 25px;
             color: #cf7027;
+            padding: 0;
+            margin: 0;
         }
     </style>
 @endsection
@@ -138,7 +145,7 @@
                     </div>
                 </div>
 
-                <div class="row">
+                <div class="row" style="margin-bottom: 20px;">
                     <hr class="orenji">
                     <div class="col-md-5 col-sm-12 col-xs-12">
                         <div class="video-feed">
@@ -156,7 +163,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-7 col-sm-12 col-xs-12">
+                    <div class="col-md-7 col-sm-12 col-xs-12" style="margin-bottom: 20px">
                         <div class="col-md-6">
                             <div id="pieChartContainer1">
                                 <h1 class="title">Gender Proportion</h1>
@@ -171,16 +178,19 @@
                             </div>
                         </div>
 
-                        <div class="col-md-10 col-xs-12 col-md-offset-1 col-xs-offset-1">
+                        <div class="col-md-12 col-xs-12">
                             <div id="timeChart" style="margin-top: 30px">
+                                <h1 class="title">Timestamp</h1>
                                 <svg></svg>
                             </div>
                         </div>
                     </div>
+
+                    <div style="clear: both;"></div>
+                    <hr class="orenji">
                 </div>
 
                 <div class="logo col-xs-12 col-md-12">
-                    <hr class="orenji">
                     <img src="/logo.png" alt="Activations Insite logo"> <br>
                     <a href="{{ url('/logout') }}" id="logout"
                        onclick="event.preventDefault();
