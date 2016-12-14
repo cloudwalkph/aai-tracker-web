@@ -9,7 +9,9 @@ class ImageToS3Service {
         $path = $this->getPath();
         $fileName = uniqid() . ".jpg";
 
-        $image->move("{$path}", $fileName);
+        $img = \Image::make($image)->orientate();
+        $img->save($path.$fileName);
+//        $image->move("{$path}", $fileName);
         // TODO: MOVE TO S3
 
         return $fileName;
