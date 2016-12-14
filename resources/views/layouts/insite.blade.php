@@ -18,6 +18,10 @@
             color: #fff;
         }
 
+        .modal {
+            color: #000;
+        }
+
         .btn-primary {
             background-color: #0b3757;
         }

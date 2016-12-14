@@ -148,6 +148,7 @@
                 <div class="row" style="margin-bottom: 20px;">
                     <hr class="orenji">
                     <div class="col-md-5 col-sm-12 col-xs-12">
+
                         <div class="video-feed">
                             {{--<img src="http://{{ $location->ip }}:81/videostream.cgi?user=admin&pwd=888888" alt="">--}}
                             <video id="my-video" class="video-js" controls preload="auto" autoplay width="600" height="360" data-setup="{}">
@@ -180,7 +181,7 @@
 
                         <div class="col-md-12 col-xs-12">
                             <div id="timeChart" style="margin-top: 30px">
-                                <h1 class="title">Timestamp</h1>
+                                <h1 class="title" style="text-align: left">Timestamp</h1>
                                 <svg></svg>
                             </div>
                         </div>
@@ -189,6 +190,24 @@
                     <div style="clear: both;"></div>
                     <hr class="orenji">
                 </div>
+
+                <div class="modal fade answersModal" tabindex="-1" role="dialog">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title">Hits</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>One fine body&hellip;</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
 
                 <div class="logo col-xs-12 col-md-12">
                     <img src="/logo.png" alt="Activations Insite logo"> <br>
