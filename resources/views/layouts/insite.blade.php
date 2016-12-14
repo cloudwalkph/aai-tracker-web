@@ -14,7 +14,7 @@
     <link href="/css/app.css" rel="stylesheet">
     <style>
         body {
-            background-color: #fbfbfb;
+            background-color: #383938;
         }
 
         .btn-primary {
@@ -69,6 +69,32 @@
             stroke: black;
             stroke-width: 2px;
             fill: none;
+        }
+
+        .orenji {
+            color: #f47f20;
+        }
+
+        .orengi-bg {
+            background-color: #f47f20;
+        }
+
+        .btn-orange {
+            color: #fff;
+            font-weight: 500;
+            text-transform: uppercase;
+            background-color: #f47f20;
+            border-color: #d6701c;
+        }
+
+        .btn-orange:hover {
+            color: #fff;
+            background-color: #d9721c;
+        }
+
+        .btn-orange:active {
+            color: #fff;
+            background-color: #c8691a;
         }
     </style>
     @yield('page-css');
