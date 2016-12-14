@@ -70,7 +70,7 @@ class EventAnswersController extends Controller {
                 'name'      => $answer->name,
                 'email'     => $answer->email,
                 'contact_number'    => $answer->contact_number,
-                'hit_date'  => Carbon::createFromTimestamp(strtotime($answer->hit_date))->toFormattedDateString()
+                'hit_date'  => Carbon::createFromTimestamp(strtotime($answer->hit_date))->format('F d Y h:i:s A')
 
             ];
         }
