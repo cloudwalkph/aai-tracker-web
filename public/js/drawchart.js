@@ -32,11 +32,56 @@ function drawChart(container, data, title) {
         chart.pie.dispatch.on("elementClick", function(e) {
             window.keySelected = e.data.key;
 
-            $('.answersModal').modal('show');
+            showHitsModal(e.data.key);
         });
 
         return chart;
     });
+}
+
+function showHitsModal(dataKey) {
+    var hitsTable = $('#hitsTable');
+    var loadingHits = $('.loading-hits');
+
+    hitsTable.hide();
+    loadingHits.show();
+
+    $('.answersModal').modal('show');
+
+    var eventId = $('#eventId').val(),
+        locationId  = $('#locationId').val();
+
+    var url = '/api/v1/events/hits/' + eventId + '/locations/' + locationId + '/answer/' + dataKey;
+
+    fetch(url).then(function(res) {
+        if (res.status !== 200) {
+            console.log('Looks like there was a problem. Status Code: ' +
+                res.status);
+            return;
+        }
+
+        res.json().then((function(json) {
+            console.log('fetch', json.data);
+
+            hitsTable.show();
+            loadingHits.hide();
+
+            hitsTable.DataTable({
+                data: json.data,
+                columns: [
+                    {title: 'UUID', data: 'uuid'},
+                    {title: 'Image', data: 'image', render: function(data, type, full, meta) {
+                        return '<img src="'+data+'" class="hit-image">'
+                    }},
+                    {title: 'Name', data: 'name'},
+                    {title: 'Email', data: 'email'},
+                    {title: 'Contact #', data: 'contact_number'},
+                    {title: 'Date', data: 'hit_date'}
+                ]
+            });
+        }))
+    });
+
 }
 
 function drawTimeChart(container, data) {

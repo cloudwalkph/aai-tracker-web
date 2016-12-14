@@ -118,6 +118,10 @@
             fill: #fff !important;
             font-size: 16px !important;
         }
+
+        .hit-image {
+            height: 250px;
+        }
     </style>
     @yield('page-css')
 

@@ -3,6 +3,8 @@
 @section('page-css')
     <link rel="stylesheet" href="/lib/nvd3/nvd3.css">
     <link href="http://vjs.zencdn.net/5.8.8/video-js.css" rel="stylesheet">
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css">
+
     <style>
         .dasboard {
             margin-top: 5px;
@@ -95,6 +97,7 @@
     <script src="/js/drawchart.js"></script>
     <script src="http://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
     <script src="http://vjs.zencdn.net/5.8.8/video.js"></script>
+    <script src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
 
     <script type="application/javascript">
         var source = new EventSource('/api/v1/events/{{ $event->id }}/locations/{{ $location->id }}/answers');
@@ -142,6 +145,8 @@
                     <div class="col-md-12 col-xs-12">
                         <h1 class="event-title">{{ $event['name'] . ' : ' . $event['description'] }}</h1>
                         <p class="event-location">{{ $location->name }}</p>
+                        <input type="hidden" value="{{ $location->id }}" id="locationId" />
+                        <input type="hidden" value="{{ $event->id }}" id="eventId" />
                     </div>
                 </div>
 
@@ -199,7 +204,13 @@
                                 <h4 class="modal-title">Hits</h4>
                             </div>
                             <div class="modal-body">
-                                <p>One fine body&hellip;</p>
+                                <div class="loading-hits" style="text-align: center">
+                                    <p>Getting data from the server</p>
+                                </div>
+
+                                <table id="hitsTable" style="display: none">
+
+                                </table>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

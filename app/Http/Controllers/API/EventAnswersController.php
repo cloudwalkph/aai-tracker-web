@@ -7,6 +7,8 @@ use App\AAI\Services\ImageToS3Service;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SaveAnswerRequest;
 use App\Http\Requests\UploadImageRequest;
+use App\Models\EventAnswer;
+use App\Models\EventLocationAnswer;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -44,6 +46,36 @@ class EventAnswersController extends Controller {
         $answer = $this->eventAnswerService->saveAnswer($input);
 
         return response()->json(['status' => 201, 'data' => $answer], 200);
+    }
+
+    public function getHits($eventId, $locationId, $criteria)
+    {
+        $result = [];
+
+        $eventLocationAnswer = EventLocationAnswer::where('event_id', $eventId)
+            ->where('event_location_id', $locationId)->get();
+
+        foreach ($eventLocationAnswer as $answer) {
+            $eventAnswer = EventAnswer::where('event_location_answer_id', $answer->id)
+                ->where('value', strtolower($criteria))->first();
+
+            if (! $eventAnswer) {
+                continue;
+            }
+
+            $result[] = [
+                'uuid'      => $answer->uuid,
+//                'user_id'   => $answer->user_id,
+                'image'     => url('/images/uploads/'.$answer->image),
+                'name'      => $answer->name,
+                'email'     => $answer->email,
+                'contact_number'    => $answer->contact_number,
+                'hit_date'  => Carbon::createFromTimestamp(strtotime($answer->hit_date))->toFormattedDateString()
+
+            ];
+        }
+
+        return response()->json(['data' => $result, 'status' => 200]);
     }
 
     public function getAnswers($eventId)
