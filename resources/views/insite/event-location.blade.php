@@ -3,10 +3,11 @@
 @section('page-css')
     <link rel="stylesheet" href="/lib/nvd3/nvd3.css">
     <link href="http://vjs.zencdn.net/5.8.8/video-js.css" rel="stylesheet">
-    <link rel="stylesheet" href="//cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css">
+    {{--<link rel="stylesheet" href="//cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css">--}}
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.13/css/dataTables.bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="//cdn.rawgit.com/noelboss/featherlight/1.6.1/release/featherlight.min.css" type="text/css" rel="stylesheet" />
 
     <style>
         .dasboard {
@@ -102,6 +103,7 @@
     <script src="http://vjs.zencdn.net/5.8.8/video.js"></script>
     <script src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
     <script src="//cdn.datatables.net/1.10.13/js/dataTables.bootstrap.min.js"></script>
+    <script src="//cdn.rawgit.com/noelboss/featherlight/1.6.1/release/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
 
     <script type="application/javascript">
         var source = new EventSource('/api/v1/events/{{ $event->id }}/locations/{{ $location->id }}/answers');
@@ -137,6 +139,16 @@
 
                 timeChartData = JSON.stringify(jsonData.data);
             }
+        });
+
+        $(function() {
+            $('.answersModal').on('hidden.bs.modal', function() {
+                var table = $('#hitsTable').DataTable();
+                table.destroy();
+
+                $('#hitsTable').hide();
+                $('#hitsTable').empty();
+            });
         });
     </script>
 @endsection
@@ -212,7 +224,7 @@
                                     <p> <i class="fa fa-spinner"></i> Getting data from the server</p>
                                 </div>
 
-                                <table id="hitsTable" style="display: none">
+                                <table class="table" id="hitsTable" style="display: none">
 
                                 </table>
                             </div>

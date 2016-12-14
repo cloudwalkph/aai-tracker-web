@@ -120,7 +120,7 @@
         }
 
         .hit-image {
-            height: 150px;
+            height: 50px;
         }
     </style>
     @yield('page-css')

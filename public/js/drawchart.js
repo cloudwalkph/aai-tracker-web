@@ -71,7 +71,7 @@ function showHitsModal(dataKey) {
                 columns: [
                     {title: 'UUID', data: 'uuid'},
                     {title: 'Image', data: 'image', render: function(data, type, full, meta) {
-                        return '<img src="'+data+'" class="hit-image">'
+                        return '<a href="#" data-featherlight="' + data + '"><img src="'+data+'" class="hit-image"></a>'
                     }},
                     {title: 'Name', data: 'name'},
                     {title: 'Email', data: 'email'},
