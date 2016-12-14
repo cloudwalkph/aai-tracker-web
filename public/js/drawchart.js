@@ -1,11 +1,16 @@
-function drawChart(container, data) {
+function drawChart(container, data, title) {
     nv.addGraph(function() {
         var chart = nv.models.pieChart()
             .x(function(d) { return d.key })
             .y(function(d) { return d.values })
+            .color(['#532400', '#f37f20', '#c76819', '#9f530c', '#7a3d00'])
             .showLabels(true)
+            .labelSunbeamLayout(true)
+            .labelsOutside(true)
             .labelThreshold(.05)
-            .labelType("percent");
+            .title(title)
+            .titleOffset(23)
+            .noData('There is no data coming from the server yet');
 
         var chartData = d3.nest()
             .key(function(d) { return d.label })
@@ -19,7 +24,7 @@ function drawChart(container, data) {
             .call(chart);
 
         d3.selectAll('.nv-legend')
-            .attr('transform', 'translate(-120, 280)')
+            .attr('transform', 'translate(-50, 0)')
             .attr('text-align', 'center');
 
         nv.utils.windowResize(chart.update);
@@ -36,7 +41,9 @@ function drawChart(container, data) {
 
 function drawTimeChart(container, data) {
     nv.addGraph(function() {
-        var chart = nv.models.lineWithFocusChart().showLegend(false);
+        var chart = nv.models.lineWithFocusChart()
+            .color(['#aa7c00'])
+            .showLegend(false);
 
         var customTimeFormat = d3.time.format.multi([
             ["%-I:%M %p", function(d) { return d.getMinutes(); }],

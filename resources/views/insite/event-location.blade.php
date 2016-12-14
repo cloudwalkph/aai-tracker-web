@@ -25,6 +25,7 @@
         }
 
         #timeChart {
+            background-color: #fbfbfb;
             width: 100%;
             height: 250px;
         }
@@ -51,7 +52,7 @@
             font-size: 25px;
             text-decoration: underline;
             cursor: pointer;
-            color: #646363;
+            color: #fff;
         }
 
         .event-title {
@@ -69,8 +70,14 @@
         hr {
             border: none;
             height: 1px;
-            color: #aaa;
-            background-color: #aaa;
+            color: #f47f20;
+            background-color: #f47f20;
+        }
+
+        .title {
+            text-align: center;
+            font-size: 25px;
+            color: #cf7027;
         }
     </style>
 @endsection
@@ -95,13 +102,13 @@
             console.log(jsonData);
 
             if (genderData !== JSON.stringify(jsonData.data['Gender'])) {
-                drawChart('#pieChartContainer1 svg', jsonData.data['Gender']);
+                drawChart('#pieChartContainer1 svg', jsonData.data['Gender'], 'Gender Proportion');
 
                 genderData = JSON.stringify(jsonData.data['Gender']);
             }
 
             if (ageGroupData !== JSON.stringify(jsonData.data['Age Group'])) {
-                drawChart('#pieChartContainer2 svg', jsonData.data['Age Group']);
+                drawChart('#pieChartContainer2 svg', jsonData.data['Age Group'], 'Age Group');
 
                 ageGroupData = JSON.stringify(jsonData.data['Age Group']);
             }
@@ -132,8 +139,8 @@
                 </div>
 
                 <div class="row">
-                    <hr>
-                    <div class="col-md-4 col-sm-12 col-xs-12">
+                    <hr class="orenji">
+                    <div class="col-md-5 col-sm-12 col-xs-12">
                         <div class="video-feed">
                             {{--<img src="http://{{ $location->ip }}:81/videostream.cgi?user=admin&pwd=888888" alt="">--}}
                             <video id="my-video" class="video-js" controls preload="auto" autoplay width="600" height="360" data-setup="{}">
@@ -149,15 +156,17 @@
                         </div>
                     </div>
 
-                    <div class="col-md-8 col-sm-12 col-xs-12">
+                    <div class="col-md-7 col-sm-12 col-xs-12">
                         <div class="col-md-6">
                             <div id="pieChartContainer1">
+                                <h1 class="title">Gender Proportion</h1>
                                 <svg></svg>
                             </div>
                         </div>
 
                         <div class="col-md-6">
                             <div id="pieChartContainer2">
+                                <h1 class="title">Age Group</h1>
                                 <svg></svg>
                             </div>
                         </div>
@@ -171,7 +180,7 @@
                 </div>
 
                 <div class="logo col-xs-12 col-md-12">
-                    <hr>
+                    <hr class="orenji">
                     <img src="/logo.png" alt="Activations Insite logo"> <br>
                     <a href="{{ url('/logout') }}" id="logout"
                        onclick="event.preventDefault();

@@ -97,6 +97,23 @@
             color: #fff;
             background-color: #c8691a;
         }
+
+        .nvd3.nv-pie path {
+            stroke-opacity: 0 !important;
+        }
+
+        .nv-legend-text {
+            fill: white !important;
+        }
+
+        .nv-legend {
+            margin-bottom: 20px;
+        }
+
+        .nv-pieLabels text {
+            fill: #fff !important;
+            font-size: 16px !important;
+        }
     </style>
     @yield('page-css')
 
