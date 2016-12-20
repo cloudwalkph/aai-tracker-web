@@ -30,7 +30,7 @@
         <div class="row">
             <div class="col-md-6 col-md-offset-3">
                 <div class="logo">
-                    <img src="/logo.png" alt="Activations Insite logo">
+                    <img src="/logo-verify.png" alt="Activations Insite logo">
                 </div>
 
                 <form class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">

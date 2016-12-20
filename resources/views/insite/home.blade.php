@@ -168,7 +168,7 @@
                 <hr>
 
                 <div class="logo">
-                    <img src="/logo.png" alt="Activations Insite logo"> <br>
+                    <img src="/logo-verify.png" alt="Activations Insite logo"> <br>
                     <a href="{{ url('/logout') }}" id="logout"
                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
