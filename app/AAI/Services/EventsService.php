@@ -27,9 +27,9 @@ class EventsService {
         $this->eventPolls = $eventPolls;
     }
 
-    public function getFullEvents()
+    public function getFullEvents($user)
     {
-        $events = $this->events->all();
+        $events = $this->events->findByKey('user_id', $user['id'])->get();
 
         $result = [];
         foreach ($events as $event) {
