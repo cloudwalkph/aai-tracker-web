@@ -15,7 +15,7 @@ class EventsController extends Controller {
 
     public function getEvents(Request $request)
     {
-        \Log::info($request->header("Authorization"));
+        \Log::info($request->headers);
         $user = $request->user();
         $response = [
             'data'      => $this->eventService->getFullEvents($user),
