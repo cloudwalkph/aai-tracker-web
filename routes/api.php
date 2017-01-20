@@ -20,7 +20,7 @@ Route::group(['prefix' => 'v1'], function() {
 
     Route::post('/upload', 'API\EventAnswersController@uploadImage');
 
-    Route::group(['prefix' => 'events', 'middleware' => 'auth:api'], function() {
+    Route::group(['prefix' => 'events'], function() {
         Route::get('/', 'API\EventsController@getEvents');
         Route::get('/hits', 'API\EventAnswersController@getEventsHitCount');
         Route::get('/hits/{eventId}', 'API\EventAnswersController@getEventsHitCountByLocation');
