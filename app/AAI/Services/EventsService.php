@@ -28,16 +28,14 @@ class EventsService {
         $this->eventPolls = $eventPolls;
     }
 
-    public function getFullEvents($user)
+    public function getFullEvents()
     {
-        $userEvents = EventUser::where('user_id', $user['id'])->get();
-        \Log::info($user);
+//        $userEvents = EventUser::where('user_id', $user['id'])->get();
+//        \Log::info($user);
+        $events = $this->events->all();
 
         $result = [];
-        foreach ($userEvents as $userEvent) {
-            \Log::info($userEvent);
-            $event = $this->events->findById($userEvent['event_id']);
-
+        foreach ($events as $event) {
             $polls = $this->getPolls($event->id);
             $locations = $this->getEventLocations($event->id);
 
