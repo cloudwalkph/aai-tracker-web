@@ -123,6 +123,10 @@
             height: 50px;
             width: 50px;
         }
+
+        .btn-solid-radius {
+            border-radius: 2px !important;
+        }
     </style>
     @yield('page-css')
 

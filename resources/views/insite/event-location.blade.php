@@ -106,6 +106,29 @@
     <script src="//cdn.rawgit.com/noelboss/featherlight/1.6.1/release/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
 
     <script type="application/javascript">
+        // hits
+        var hitSource = new EventSource('/api/v1/events/hits/{{ $event->id }}');
+        var hitsWorker = new Worker('/js/hits-updater.js');
+        var hitsData;
+
+        hitSource.addEventListener("message", function(res) {
+            var jsonData = JSON.parse(res.data);
+
+            if (hitsData !== JSON.stringify(jsonData)) {
+                hitsWorker.postMessage(jsonData);
+
+                hitsData = JSON.stringify(jsonData);
+            }
+
+        }, false);
+
+        hitsWorker.onmessage = function(e) {
+            var element = document.getElementById(e.data.id);
+            element.innerHTML = e.data.event.total_hits;
+        };
+
+        // graphs
+
         var source = new EventSource('/api/v1/events/{{ $event->id }}/locations/{{ $location->id }}/answers');
         var timestampedSource = new EventSource('/api/v1/events/hits/{{ $event->id }}/locations/{{ $location->id }}/timestamped');
 
@@ -180,12 +203,23 @@
                                 </p>
                             </video>
                         </div>
-                        <div style="text-align: center">
-                            <a href="http://miitown.com" target="_blank">View GPS Data</a>
+                        <div style="text-align: left; margin-top: 20px">
+                            <a type="button" class="btn btn-orange btn-solid-radius"
+                               href="http://miitown.com">
+                                View GPS Data
+                            </a>
+
+                            <a type="button" class="btn btn-orange btn-solid-radius"
+                               href="http://miitown.com">
+                                Download Video
+                            </a>
                         </div>
                     </div>
 
                     <div class="col-md-7 col-sm-12 col-xs-12" style="margin-bottom: 20px">
+                        <div class="col-md-12" style="text-align: center">
+                            <h1>Total Hits: <span id="hits-{{ $location->id }}">0</span></h1>
+                        </div>
                         <div class="col-md-6">
                             <div id="pieChartContainer1">
                                 <h1 class="title">Gender Proportion</h1>
