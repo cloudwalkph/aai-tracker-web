@@ -87,6 +87,7 @@ class EventsService {
 
         $result = [];
         foreach ($eventPolls as $eventPoll) {
+            \Log::info($eventPoll);
             $poll = $this->polls->findById($eventPoll->id);
 
             $result[] = [
