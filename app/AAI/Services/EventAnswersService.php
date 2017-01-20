@@ -125,9 +125,7 @@ class EventAnswersService {
         $today = Carbon::now('Asia/Manila');
         $date = $today->toDateString();
 
-        $events = Event::whereDate('start_date', '<=', $date)
-            ->whereDate('end_date', '>=', $date)
-            ->get();
+        $events = Event::all();
 
         foreach ($events as $event) {
             $count = $this->getAnswersCountByEvent($event->id);
