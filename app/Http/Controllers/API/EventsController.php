@@ -15,7 +15,7 @@ class EventsController extends Controller {
 
     public function getEvents(Request $request)
     {
-        \Log::info($request->headers);
+        \Log::info($request->user());
         $user = $request->user();
         $response = [
             'data'      => $this->eventService->getFullEvents($user),
