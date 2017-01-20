@@ -31,9 +31,11 @@ class EventsService {
     public function getFullEvents($user)
     {
         $userEvents = EventUser::where('user_id', $user['id'])->get();
+        \Log::info($user['id']);
 
         $result = [];
         foreach ($userEvents as $userEvent) {
+            \Log::info($userEvent);
             $event = $this->events->findById($userEvent['event_id']);
 
             $polls = $this->getPolls($event->id);
@@ -90,7 +92,6 @@ class EventsService {
 
         $result = [];
         foreach ($eventPolls as $eventPoll) {
-            \Log::info($eventPoll);
             $poll = $this->polls->findById($eventPoll->id);
 
             $result[] = [
