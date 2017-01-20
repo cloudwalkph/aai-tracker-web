@@ -31,7 +31,7 @@ class EventsService {
     public function getFullEvents($user)
     {
         $userEvents = EventUser::where('user_id', $user['id'])->get();
-        \Log::info($user['id']);
+        \Log::info($user);
 
         $result = [];
         foreach ($userEvents as $userEvent) {
