@@ -7,6 +7,7 @@ use App\AAI\Modules\EventPolls\Repositories\EventPollsRepository;
 use App\AAI\Modules\Events\Repositories\EventsRepository;
 use App\AAI\Modules\Polls\Repositories\PollsRepository;
 use App\Models\EventAnswer;
+use App\Models\EventUser;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
@@ -29,10 +30,12 @@ class EventsService {
 
     public function getFullEvents($user)
     {
-        $events = $this->events->findByKey('user_id', $user['id'])->get();
+        $userEvents = EventUser::where('user_id', $user['id'])->get();
 
         $result = [];
-        foreach ($events as $event) {
+        foreach ($userEvents as $userEvent) {
+            $event = $this->events->findById($userEvent['event_id']);
+
             $polls = $this->getPolls($event->id);
             $locations = $this->getEventLocations($event->id);
 
