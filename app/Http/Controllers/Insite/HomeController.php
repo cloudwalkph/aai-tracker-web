@@ -45,25 +45,28 @@ class HomeController extends Controller {
         $endDate = Carbon::createFromTimestamp(strtotime($event->end_date));
         $today = Carbon::today('Asia/Manila');
 
-
         if ($startDate->isFuture()) {
             return 'Not Started';
         }
 
-        if ($endDate->isPast()) {
-            return 'Finished';
+        if ($startDate->isSameDay($today)) {
+            return 'On Going';
         }
 
         if ($startDate->isToday()) {
             return 'On Going';
         }
 
-        if ($today->diffInDays($endDate) > 0) {
+        if ($today->between($startDate, $endDate) ) {
+            return 'On Going';
+        }
+
+        if ($endDate->isPast()) {
             return 'Finished';
         }
 
-        if ($today->between($startDate, $endDate) ) {
-            return 'On Going';
+        if ($today->diffInDays($endDate) > 0) {
+            return 'Finished';
         }
 
         return 'Not Started';
