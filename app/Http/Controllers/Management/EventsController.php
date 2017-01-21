@@ -35,9 +35,7 @@ class EventsController extends Controller {
             // Get the locations again
             $locations = EventLocation::where('event_id', $eventId)->get();
 
-            return view('management.events.view-event-locations')
-                ->with('eventId', $eventId)
-                ->with('locations', $locations);
+            redirect()->to('management/events/'.$eventId.'/locations');
         }
 
         $videoPlayback = $request->file('video_playback')->store('videos');
@@ -50,9 +48,7 @@ class EventsController extends Controller {
         // Get the locations again
         $locations = EventLocation::where('event_id', $eventId)->get();
 
-        return view('management.events.view-event-locations')
-            ->with('eventId', $eventId)
-            ->with('locations', $locations);
+        return redirect()->to('management/events/'.$eventId.'/locations');
     }
 
 }
