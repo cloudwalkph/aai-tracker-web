@@ -12,8 +12,10 @@
             var locationsTable = $('#locationsTable').DataTable();
 
             $('#uploadForm').on('submit', function() {
-                var file = $('#videoPlayback').files[0];
+                var file = $('#videoPlayback')[0].files[0];
                 fnProgress(file);
+
+                return true;
             });
 
             var fnProgress = function(file, bytes) {
