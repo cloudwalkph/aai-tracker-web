@@ -34,4 +34,7 @@ Route::group(['prefix' => 'insite'], function() {
 Route::group(['prefix' => 'management'], function() {
     Route::get('login', 'Management\LoginController@index');
     Route::get('/', 'Management\DashboardController@index');
+
+    Route::get('events', 'Management\EventsController@index');
+    Route::get('events/{eventId}/locations', 'Management\EventsController@showLocations');
 });
