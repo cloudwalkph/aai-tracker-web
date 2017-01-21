@@ -15,11 +15,11 @@
                 $('#startUpload').prop('disabled', 'disabled');
             });
 
-            $('#viewModalUpload').on('click', function() {
-                var eventId = $(this).data('location');
-                var locationId = $(this).data('event');
+            $('.viewModalUpload').on('click', function() {
+                var eventId = $(this).data('event');
+                var locationId = $(this).data('location');
 
-                $('#uploadForm').attr('action', '/management/events/' + eventId + '/locations/' + locationId);
+                $('#uploadForm').prop('action', '/management/events/' + eventId + '/locations/' + locationId);
             });
         });
     </script>

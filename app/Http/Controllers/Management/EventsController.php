@@ -38,14 +38,12 @@ class EventsController extends Controller {
             redirect()->to('/management/events/'.$eventId.'/locations');
         }
 
-        $videoPlayback = $request->file('video_playback')->store('videos');
+        $videoPlayback = $request->file('video_playback')->storeAs('videos', uniqid());
 
         // Update the channel of location
         EventLocation::where('id', $locationId)->update([
             'channel'   => $videoPlayback
         ]);
-
-        print_r($videoPlayback);exit;
 
         // Get the locations again
         $locations = EventLocation::where('event_id', $eventId)->get();
