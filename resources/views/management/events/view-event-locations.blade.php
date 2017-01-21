@@ -12,20 +12,15 @@
             var locationsTable = $('#locationsTable').DataTable();
 
             $('#uploadForm').on('submit', function() {
-                var file = $('#videoPlayback')[0].files[0];
-                fnProgress(file);
-
-                return true;
+                $('#startUpload').prop('disabled', 'disabled');
             });
 
-            var fnProgress = function(file, bytes) {
-                var percentage = (bytesLoaded / file.size) * 100;
+            $('#viewModalUpload').on('click', function() {
+                var eventId = $(this).data('location');
+                var locationId = $(this).data('event');
 
-                // Update DOM
-                $('#uploadProgress').css('width', percentage);
-                $('#uploadProgress').attr('aria-valuenow', percentage);
-                $('#progressText').html(percentage);
-            }
+                $('#uploadForm').attr('action', '/management/events/' + eventId + '/locations/' + locationId);
+            });
         });
     </script>
 @endsection
@@ -58,7 +53,9 @@
                                     <td>{{ $location['expected_hits'] }}</td>
                                     <td>{{ $location['channel'] }}</td>
                                     <td>
-                                        <a class="btn btn-default"
+                                        <a class="btn btn-default viewModalUpload"
+                                           data-event="{{ $eventId }}"
+                                           data-location="{{ $location['id'] }}"
                                            data-toggle="modal" data-target="#uploadVideModal">
                                             Upload Video Playback
                                         </a>
@@ -82,15 +79,6 @@
                     </div>
                     <div class="modal-body">
 
-                        <div class="progress">
-                            <div class="progress-bar progress-bar-striped active"
-                                 id="uploadProgress"
-                                 role="progressbar" aria-valuenow="0"
-                                 aria-valuemin="0" aria-valuemax="100" style="width: 0%">
-                                <span class="sr-only"><span id="progressText">0</span>% Complete</span>
-                            </div>
-                        </div>
-
                         <form action="/management/events/{{ $eventId }}/locations/{{ $location['id'] }}"
                               id="uploadForm"
                               enctype="multipart/form-data"
@@ -104,7 +92,7 @@
                                        accept="video/mp4,video/x-m4v,video/*">
                             </div>
 
-                            <button class="btn btn-primary">Start Upload</button>
+                            <button class="btn btn-primary startUpload">Start Upload</button>
                         </form>
                     </div>
                 </div>
