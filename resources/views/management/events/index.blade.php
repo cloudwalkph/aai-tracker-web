@@ -44,7 +44,8 @@
                                         <td>{{ $event['start_date'] }}</td>
                                         <td>{{ $event['end_date'] }}</td>
                                         <td>
-                                            <a class="btn btn-default" href="/management/events/{{ $event['id'] }}/locations">
+                                            <a class="btn btn-default"
+                                               href="/management/events/{{ $event['id'] }}/locations">
                                                 View Locations
                                             </a>
                                         </td>

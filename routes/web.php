@@ -37,4 +37,5 @@ Route::group(['prefix' => 'management'], function() {
 
     Route::get('events', 'Management\EventsController@index');
     Route::get('events/{eventId}/locations', 'Management\EventsController@showLocations');
+    Route::post('events/{eventId}/locations/{locationId}', 'Management\EventsController@uploadPlaybackFootage');
 });

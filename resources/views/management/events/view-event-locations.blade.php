@@ -42,7 +42,8 @@
                                     <td>{{ $location['expected_hits'] }}</td>
                                     <td>{{ $location['channel'] }}</td>
                                     <td>
-                                        <a class="btn btn-default" href="/management/events/{{ $location['id'] }}/locations">
+                                        <a class="btn btn-default"
+                                           data-toggle="modal" data-target="#uploadVideModal">
                                             Upload Video Playback
                                         </a>
                                     </td>
@@ -50,6 +51,41 @@
                             @endforeach
                             </tbody>
                         </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{--Modal--}}
+        <div class="modal fade" id="uploadVideModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Upload Video</h4>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 45%">
+                                <span class="sr-only">45% Complete</span>
+                            </div>
+                        </div>
+
+                        <form action="/management/events/{{ $eventId }}/locations/{{ $location['id'] }}"
+                              enctype="multipart/form-data"
+                              method="POST">
+                            {{ csrf_field() }}
+                            <div class="form-group">
+                                <label for="videoPlayback">File input</label>
+                                <input type="file"
+                                       id="videoPlayback"
+                                       name="video_playback"
+                                       accept="video/mp4,video/x-m4v,video/*">
+                            </div>
+
+                            <button class="btn btn-primary">Start Upload</button>
+                        </form>
                     </div>
                 </div>
             </div>
