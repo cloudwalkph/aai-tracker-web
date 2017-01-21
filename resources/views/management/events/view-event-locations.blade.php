@@ -10,6 +10,20 @@
     <script>
         $(function() {
             var locationsTable = $('#locationsTable').DataTable();
+
+            $('#uploadForm').on('submit', function() {
+                var file = $('#videoPlayback').files[0];
+                fnProgress(file);
+            });
+
+            var fnProgress = function(file, bytes) {
+                var percentage = (bytesLoaded / file.size) * 100;
+
+                // Update DOM
+                $('#uploadProgress').css('width', percentage);
+                $('#uploadProgress').attr('aria-valuenow', percentage);
+                $('#progressText').html(percentage);
+            }
         });
     </script>
 @endsection
@@ -67,12 +81,16 @@
                     <div class="modal-body">
 
                         <div class="progress">
-                            <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 45%">
-                                <span class="sr-only">45% Complete</span>
+                            <div class="progress-bar progress-bar-striped active"
+                                 id="uploadProgress"
+                                 role="progressbar" aria-valuenow="0"
+                                 aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+                                <span class="sr-only"><span id="progressText">0</span>% Complete</span>
                             </div>
                         </div>
 
                         <form action="/management/events/{{ $eventId }}/locations/{{ $location['id'] }}"
+                              id="uploadForm"
                               enctype="multipart/form-data"
                               method="POST">
                             {{ csrf_field() }}
