@@ -92,6 +92,13 @@
             padding: 0;
             margin: 0;
         }
+
+        .logo-image {
+            width:150px;
+            position: absolute;
+            top: 30px;
+            right: 20px;
+        }
     </style>
 @endsection
 
@@ -181,11 +188,15 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="row" style="margin-bottom: 10px">
-                    <div class="col-md-12 col-xs-12">
+                    <div class="col-md-12 col-xs-12" style="position: relative">
                         <h1 class="event-title">{{ $event['name'] . ' : ' . $event['description'] }}</h1>
                         <p class="event-location">{{ $location->name }}</p>
                         <input type="hidden" value="{{ $location->id }}" id="locationId" />
                         <input type="hidden" value="{{ $event->id }}" id="eventId" />
+
+                        <img src="/logo-verify.png"
+                             class="logo-image"
+                             alt="Activations Insite logo">
                     </div>
                 </div>
 
@@ -270,7 +281,6 @@
                 </div><!-- /.modal -->
 
                 <div class="logo col-xs-12 col-md-12">
-                    <img src="/logo-verify.png" alt="Activations Insite logo"> <br>
                     <a href="{{ url('/logout') }}" id="logout"
                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
