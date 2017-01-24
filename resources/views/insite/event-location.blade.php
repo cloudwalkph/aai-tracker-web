@@ -207,7 +207,7 @@
                         <div class="video-feed">
                             {{--<img src="http://{{ $location->ip }}:81/videostream.cgi?user=admin&pwd=888888" alt="">--}}
                             <video id="my-video" class="video-js" controls preload="auto" autoplay width="600" height="360" data-setup="{}">
-                                <source src="rtmp://54.238.155.160/live/{{ $location->channel }}" type='rtmp/mp4'>
+                                <source src="rtmp://54.238.155.160/vod/{{ $location->channel }}" type='rtmp/mp4'>
                                 <p class="vjs-no-js">
                                     To view this video please enable JavaScript, and consider upgrading to a web browser that
                                     <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
