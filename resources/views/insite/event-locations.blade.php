@@ -16,8 +16,8 @@
             display: inline;
             overflow: hidden;
             padding: 0 65px;
-            min-height: 350px;
-            max-height: 350px;
+            min-height: 400px;
+            max-height: 400px;
         }
 
         .card-image {
