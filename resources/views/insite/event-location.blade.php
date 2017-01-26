@@ -49,7 +49,7 @@
             width: 100%;
             margin-bottom: 20px;
             text-align: center;
-            position: fixed;
+            /*position: fixed;*/
             bottom: 0;
         }
 
