@@ -78,6 +78,10 @@
             text-align: center;
         }
 
+        .event-location-date {
+            text-align: center;
+        }
+
         hr {
             border: none;
             height: 1px;
