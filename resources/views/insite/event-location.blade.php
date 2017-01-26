@@ -191,6 +191,7 @@
                     <div class="col-md-12 col-xs-12" style="position: relative">
                         <h1 class="event-title">{{ $event['name'] . ' : ' . $event['description'] }}</h1>
                         <p class="event-location">{{ $location->name }}</p>
+                        <p class="event-location-date">{{ $location->live_date }}</p>
                         <input type="hidden" value="{{ $location->id }}" id="locationId" />
                         <input type="hidden" value="{{ $event->id }}" id="eventId" />
 
