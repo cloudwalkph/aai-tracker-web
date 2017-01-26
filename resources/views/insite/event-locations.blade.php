@@ -221,6 +221,7 @@
 
                                     <div class="card-label">
                                         <p><strong>{{ $location['name'] }}</strong></p>
+                                        <p>{{ \Carbon\Carbon::createFromTimestamp(strtotime($location->live_date))->toFormattedDateString() }}</p>
                                         {{--<p>{{ $event['description'] }}</p>--}}
                                     </div>
                                 </div>
