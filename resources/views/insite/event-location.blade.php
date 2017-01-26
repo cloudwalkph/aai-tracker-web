@@ -116,6 +116,10 @@
     <script src="//cdn.datatables.net/1.10.13/js/dataTables.bootstrap.min.js"></script>
     <script src="//cdn.rawgit.com/noelboss/featherlight/1.6.1/release/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
 
+    <script>
+        videojs.options.flash.swf = "/VideoJS.swf";
+    </script>
+
     <script type="application/javascript">
         // hits
         var hitSource = new EventSource('/api/v1/events/hits/{{ $event->id }}');
