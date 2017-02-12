@@ -2,7 +2,7 @@
 
 @section('page-css')
     <link rel="stylesheet" href="/lib/nvd3/nvd3.css">
-    <link href="http://vjs.zencdn.net/5.8.8/video-js.css" rel="stylesheet">
+    {{--<link href="http://vjs.zencdn.net/5.8.8/video-js.css" rel="stylesheet">--}}
     {{--<link rel="stylesheet" href="//cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css">--}}
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.13/css/dataTables.bootstrap.min.css">
@@ -103,6 +103,11 @@
             top: 30px;
             right: 20px;
         }
+
+        .jw-dock-image {
+            background-size: 45%;
+            opacity: 1;
+        }
     </style>
 @endsection
 
@@ -110,14 +115,40 @@
     <script src="/js/d3.js"></script>
     <script src="/lib/nvd3/nvd3.min.js"></script>
     <script src="/js/drawchart.js"></script>
-    <script src="http://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
-    <script src="http://vjs.zencdn.net/5.8.8/video.js"></script>
+    {{--<script src="http://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>--}}
+    {{--<script src="http://vjs.zencdn.net/5.8.8/video.js"></script>--}}
     <script src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
     <script src="//cdn.datatables.net/1.10.13/js/dataTables.bootstrap.min.js"></script>
     <script src="//cdn.rawgit.com/noelboss/featherlight/1.6.1/release/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
 
+    {{--<script>--}}
+        {{--videojs.options.flash.swf = "/VideoJS.swf";--}}
+    {{--</script>--}}
+
+    {{--JW PLAYER--}}
+    <script src="//content.jwplatform.com/libraries/PotMeZLE.js"></script>
     <script>
-        videojs.options.flash.swf = "/VideoJS.swf";
+        var player = jwplayer('player');
+        var liveUrl = "rtmp://52.79.192.27:1935/{{ $location->channel }}";
+
+        player.setup({
+            file: liveUrl,
+            image: "/logo-verify.png"
+        });
+
+        player.addButton(
+            //This portion is what designates the graphic used for the button
+            "//icons.jwplayer.com/icons/white/download.svg",
+            //This portion determines the text that appears as a tooltip
+            "Download Video",
+            //This portion designates the functionality of the button itself
+            function() {
+                //With the below code, we're grabbing the file that's currently playing
+                window.location.href = player.getPlaylistItem()['file'];
+            },
+            //And finally, here we set the unique ID of the button itself.
+            "download"
+        );
     </script>
 
     <script type="application/javascript">
@@ -213,15 +244,17 @@
                     <hr class="orenji">
                     <div class="col-md-5 col-sm-12 col-xs-12">
 
-                        <div class="video-feed">
+                        <div class="video-feed" id="player">
+
+
                             {{--<img src="http://{{ $location->ip }}:81/videostream.cgi?user=admin&pwd=888888" alt="">--}}
-                            <video id="my-video" class="video-js" controls preload="auto" autoplay width="600" height="360" data-setup="{}">
-                                <source src="rtmp://54.238.155.160/{{ $location->channel }}" type='rtmp/mp4'>
-                                <p class="vjs-no-js">
-                                    To view this video please enable JavaScript, and consider upgrading to a web browser that
-                                    <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
-                                </p>
-                            </video>
+                            {{--<video id="my-video" class="video-js" controls preload="auto" autoplay width="600" height="360" data-setup="{}">--}}
+                                {{--<source src="rtmp://54.238.155.160/{{ $location->channel }}" type='rtmp/mp4'>--}}
+                                {{--<p class="vjs-no-js">--}}
+                                    {{--To view this video please enable JavaScript, and consider upgrading to a web browser that--}}
+                                    {{--<a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>--}}
+                                {{--</p>--}}
+                            {{--</video>--}}
                         </div>
                         <div style="text-align: left; margin-top: 20px">
                             <a type="button" class="btn btn-orange btn-solid-radius"
