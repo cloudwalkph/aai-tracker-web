@@ -40,6 +40,7 @@ class EventsService {
             $locations = $this->getEventLocations($event->id);
 
             $result[] = [
+                'id'            => $event->id,
                 'event_id'      => $event->id,
                 'name'          => $event->name,
                 'description'   => $event->description,
