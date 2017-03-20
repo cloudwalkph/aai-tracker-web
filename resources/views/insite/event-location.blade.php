@@ -129,7 +129,7 @@
     <script src="//content.jwplatform.com/libraries/PotMeZLE.js"></script>
     <script>
         var player = jwplayer('player');
-        var liveUrl = "rtmp://52.79.192.27:1935/{{ $location->channel }}";
+        var liveUrl = "rtmp://54.238.155.160/{{ $location->channel }}";
 
         player.setup({
             file: liveUrl,
